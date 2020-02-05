@@ -1,5 +1,10 @@
-package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.backend.to;
-
+package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
+/**
+ * Classe que representa da Grade como TO.
+ * 
+ * @author Eduardo Fillipe da Silva Reis
+ *
+ */
 public class GradeTO extends TransferObjectBase{
 	private HorarioTO[][] grade;
 

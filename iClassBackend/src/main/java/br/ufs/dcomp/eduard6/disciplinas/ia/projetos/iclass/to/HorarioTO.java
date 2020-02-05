@@ -1,7 +1,13 @@
-package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.backend.to;
+package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
 
 import java.time.DayOfWeek;
 
+
+/**
+ * Classe que representa o Horario como TO.
+ * @author Eduardo Fillipe da Silva Reis
+ *
+ */
 public class HorarioTO extends TransferObjectBase {
 	
 	private String codigo;

@@ -1,7 +1,12 @@
-package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.backend.to;
+package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
 
 import java.util.List;
 
+/**
+ * Class que representa o problema enviado pelo FrontEnd para ser resolvido.
+ * @author Eduardo Fillipe da Silva Reis
+ *
+ */
 public class ProblemaOrganizacaoTO extends TransferObjectBase{
 	
 	public enum TurnoGrade {
