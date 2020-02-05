@@ -11,7 +11,14 @@ import java.util.List;
 public class ProfessorTO extends TransferObjectBase{
 	private String nome;
 	private String matricula;
+	/**
+	 * Lista de preferências. Se as preferências do professores for nula ou vazia,
+	 * implica que ele pode lecionar qualquer disciplina.
+	 */
 	private List<DisciplinaTO> preferencias;
+	/**
+	 * Carga horária disponível para o professor dar aula.
+	 */
 	private short cargaHorariaSemanal;
 	
 	public ProfessorTO(String nome, String matricula, List<DisciplinaTO> preferencias, short cargaHorariaSemanal) {

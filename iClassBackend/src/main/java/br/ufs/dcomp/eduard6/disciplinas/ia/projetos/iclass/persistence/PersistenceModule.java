@@ -1,5 +1,6 @@
-package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.modulo.persistence;
+package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,4 +19,8 @@ public abstract class PersistenceModule {
 	 * @throws Exception Se não foi bem sucedido durante o carregamento
 	 */
 	protected abstract Map<String, String> loadProperties() throws Exception;
+	
+	public Map<String, String> getProperties() {
+	    return new HashMap<>(properties);
+	}
 }

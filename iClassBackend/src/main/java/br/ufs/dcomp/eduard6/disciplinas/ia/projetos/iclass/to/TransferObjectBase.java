@@ -5,6 +5,6 @@ package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
  * @author Eduardo Fillipe da Silva Reis
  *
  */
-public abstract class TransferObjectBase{
+public abstract class TransferObjectBase {
 
 }

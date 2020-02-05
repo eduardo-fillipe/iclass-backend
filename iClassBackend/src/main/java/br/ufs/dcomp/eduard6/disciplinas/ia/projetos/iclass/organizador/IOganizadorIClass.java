@@ -11,6 +11,6 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProblemaOrganizaca
  * @author Eduardo Fillipe da Silva Reis
  *
  */
-public interface OganizadorIClass {
+public interface IOganizadorIClass {
 	public List<GradeTO> organize(ProblemaOrganizacaoTO problema);
 }

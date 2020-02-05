@@ -44,6 +44,31 @@ public class TurmaTO extends TransferObjectBase{
 	public boolean possuiHorario(HorarioTO horario) {
 		return this.horariosAulas.containsKey(horario.getCodigo());
 	}
+	
+	/**
+	 * Verifica se os horários cadastrados nessa turma condizem com os horários da disciplina.
+	 * @return a diferença entre a carga horária da disciplina e a soma dos horários cadastrados na turma.
+	 */
+	public short getDiferencaHorarios() {
+	    short sum = 0;
+	    
+	    for (HorarioTO horario : horariosAulas.values()) 
+	        sum += horario.getHorarioSequencia().getValor();
+	    
+	    if (disciplina == null)
+	        throw new NullPointerException("Não foi inserida uma disciplina na turma. "
+	                + "Não é possível comparar os horários.");
+	    
+	    return (short) (disciplina.getCargaHoraria() - sum);
+	}
+	
+	/**
+	 * Verifica se os horários da turma estão completos
+	 * @return true se a soma dos horários cadastrados na turma é igual ao esperado da disciplina da turma.
+	 */
+	public boolean isHorariosCompletos() {
+	    return getDiferencaHorarios() == 0;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

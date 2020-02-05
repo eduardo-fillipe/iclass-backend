@@ -13,9 +13,21 @@ public class ProblemaOrganizacaoTO extends TransferObjectBase{
 		MANHA, TARDE, NOITE
 	}
 	
+	/**
+	 * Lista de professores.
+	 */
 	private List<ProfessorTO> professores;
+	/**
+	 * Turmas obrigatórias.
+	 */
 	private List<TurmaTO> turmasObrigatorias;
+	/**
+	 * Turma de outros departamentos
+	 */
 	private List<TurmaTO> turmasPredefinidas;
+	/**
+	 * Turno principal do período.
+	 */
 	private TurnoGrade turnoGrade;
 	/**
 	 * Quantidade Máxima de horas/aula permitidas por dia. Inicialmente seriam 6.
@@ -25,6 +37,16 @@ public class ProblemaOrganizacaoTO extends TransferObjectBase{
 	public ProblemaOrganizacaoTO(List<ProfessorTO> professores, List<TurmaTO> turmasObrigatorias,
 			List<TurmaTO> turmasPredefinidas, TurnoGrade turnoGrade, int cargaHorariaGrade) {
 		super();
+		
+		for (TurmaTO turmaObrigatoria : turmasPredefinidas) {
+		    if (turmaObrigatoria.getHorariosAulas() == null || 
+		            turmaObrigatoria.getHorariosAulas().isEmpty() ||
+		            turmaObrigatoria.getDisciplina() != null ||
+		            turmaObrigatoria.isHorariosCompletos()) {
+		        throw new IllegalArgumentException("Toda disciplina predefinida deve possuir seus horários/disciplinas pre-definidos.");
+		    }
+		}
+		
 		this.professores = professores;
 		this.turmasObrigatorias = turmasObrigatorias;
 		this.turmasPredefinidas = turmasPredefinidas;
@@ -66,6 +88,4 @@ public class ProblemaOrganizacaoTO extends TransferObjectBase{
 	public void setCargaHorariaGrade(int cargaHorariaGrade) {
 		this.cargaHorariaGrade = cargaHorariaGrade;
 	}
-	
-	
 }

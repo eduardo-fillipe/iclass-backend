@@ -12,18 +12,60 @@ public class HorarioTO extends TransferObjectBase {
 	
 	private String codigo;
 	private DayOfWeek dia;
-	private short horarioSequencia;
+	/**
+	 * Quantidade de aulas/hora em sequencia desse horário, pode variar entre 2 e 4.
+	 */
+	private HorarioSequencia horarioSequencia;
 	private TurmaTO turma;
+	/**
+	 * Numero do horário (primeiro, segundo, terceiro horário?)
+	 */
+	private short numeroHorario;
 	
+	/**
+	 * Representa as sequencias de horários que as turmas podem assumir.
+	 * 
+	 * @author Eduardo Fillipe da Silva Reis
+	 */
+	public enum HorarioSequencia {
+	    DOIS((short) 2), QUATRO((short) 4);
+	    
+	    private short valor;
+	    
+	    private HorarioSequencia(short horarioSequencia) {
+            this.valor = horarioSequencia;
+        }
+	    
+	    public short getValor() {
+	        return valor;
+	    }
+	}
+	
+	/**
+	 * Constrói um horárioTO vazio a partir de um código dado.
+	 * @param codigoHorario
+	 * @return
+	 */
 	public static HorarioTO fromCodigo(String codigoHorario) {
 		throw new UnsupportedOperationException("Ainda não implementado.");
 	}
 
-	public HorarioTO(String codigo, DayOfWeek dia, short horarioSequencia, TurmaTO turma) {
+	public HorarioTO(String codigo, DayOfWeek dia, HorarioSequencia horarioSequencia, TurmaTO turma) {
 		super();
+		if (!isCodigoValido())
+		    throw new IllegalArgumentException("Código de horário inválido.");
+		
 		this.codigo = codigo;
 		this.dia = dia;
 		this.horarioSequencia = horarioSequencia;
+		this.turma = turma;
+	}
+	/**
+	 * Método auxiliar que verifica se um dado código é válido.
+	 * @return true se o código for válido.
+	 */
+	private boolean isCodigoValido(){
+	   throw new UnsupportedOperationException("Ainda não implementado.");
 	}
 
 	public HorarioTO() {
@@ -42,15 +84,23 @@ public class HorarioTO extends TransferObjectBase {
 		return dia;
 	}
 
-	public void setDia(DayOfWeek dia) {
+	public short getNumeroHorario() {
+        return numeroHorario;
+    }
+
+    public void setNumeroHorario(short numeroHorario) {
+        this.numeroHorario = numeroHorario;
+    }
+
+    public void setDia(DayOfWeek dia) {
 		this.dia = dia;
 	}
 
-	public short getHorarioSequencia() {
+	public HorarioSequencia getHorarioSequencia() {
 		return horarioSequencia;
 	}
 
-	public void setHorarioSequencia(short horarioSequencia) {
+	public void setHorarioSequencia(HorarioSequencia horarioSequencia) {
 		this.horarioSequencia = horarioSequencia;
 	}
 
