@@ -68,4 +68,21 @@ public class ProfessorTO extends TransferObjectBase{
 	public void setCargaHorariaSemanal(short cargaHorariaSemanal) {
 		this.cargaHorariaSemanal = cargaHorariaSemanal;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ProfessorTO [nome=");
+		builder.append(nome);
+		builder.append(", matricula=");
+		builder.append(matricula);
+		builder.append(", preferencias=");
+		builder.append(preferencias);
+		builder.append(", cargaHorariaSemanal=");
+		builder.append(cargaHorariaSemanal);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 }

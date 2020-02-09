@@ -6,6 +6,8 @@ package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
  *
  */
 public class GradeTO extends TransferObjectBase{
+	
+	@SuppressWarnings("unused")
 	private HorarioTO[][] grade;
 
 	public GradeTO(short cargaHorariaMaximaDiaria) {

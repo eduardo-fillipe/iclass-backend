@@ -49,4 +49,17 @@ public class DisciplinaTO extends TransferObjectBase{
 		}
 		return false;	
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DisciplinaTO [nome=");
+		builder.append(nome);
+		builder.append(", codigo=");
+		builder.append(codigo);
+		builder.append(", cargaHoraria=");
+		builder.append(cargaHoraria);
+		builder.append("]");
+		return builder.toString();
+	}	
 }

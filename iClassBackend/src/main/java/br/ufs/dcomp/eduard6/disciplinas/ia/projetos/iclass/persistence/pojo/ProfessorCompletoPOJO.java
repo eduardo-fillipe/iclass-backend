@@ -3,42 +3,33 @@ package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.codecs.pojo.annotations.BsonProperty;
-
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
 /**
  * 
  * @author Eduardo Fillipe da Silva Reis
  *
  */
-public class ProfessorPOJO {
-	
+public class ProfessorCompletoPOJO {
 	private String nome;
 	private String matricula;
-	private List<String> preferencias;
+	private List<DisciplinaPOJO> preferencias;
 	private short cargaHorariaSemanal;
 	
-	public ProfessorPOJO(@BsonProperty("nome")String nome, String matricula, List<String> preferencias, short cargaHorariaSemanal) {
-		super();
+	public ProfessorCompletoPOJO(String nome, String matricula, List<DisciplinaPOJO> preferencias, short cargaHorariaSemanal) {
 		this.nome = nome;
 		this.matricula = matricula;
 		this.preferencias = preferencias;
 		this.cargaHorariaSemanal = cargaHorariaSemanal;
 	}
 	
-	
-	public ProfessorPOJO() {
-		
-	}
-	
-	public static ProfessorPOJO fromTO(ProfessorTO professor) {
-		ProfessorPOJO p = new ProfessorPOJO(professor.getNome(),
+	public static ProfessorCompletoPOJO fromTO(ProfessorTO professor) {
+		ProfessorCompletoPOJO p = new ProfessorCompletoPOJO(professor.getNome(),
 				professor.getMatricula(),
-				new ArrayList<String>(professor.getPreferencias().size()),
+				new ArrayList<DisciplinaPOJO>(professor.getPreferencias().size()),
 				professor.getCargaHorariaSemanal());
 		
 		professor.getPreferencias().forEach(o -> {
-			p.preferencias.add(o.getCodigo());
+			p.getPreferencias().add(new DisciplinaPOJO(o));
 		});
 		
 		return p;
@@ -60,11 +51,11 @@ public class ProfessorPOJO {
 		this.matricula = matricula;
 	}
 
-	public List<String> getPreferencias() {
+	public List<DisciplinaPOJO> getPreferencias() {
 		return preferencias;
 	}
 
-	public void setPreferencias(List<String> preferencias) {
+	public void setPreferencias(List<DisciplinaPOJO> preferencias) {
 		this.preferencias = preferencias;
 	}
 

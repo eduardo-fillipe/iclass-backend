@@ -15,6 +15,7 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.TurmaTO;
  * 
  * @author Eduardo Fillipe da Silva Reis
  */
+@SuppressWarnings("unused")
 public class IClassCSP extends CSP<HorarioVariable, TurmaDomainRepresentation>{
 	private HashMap<String, TurmaTO> turmas;
 	private HashMap<String, ProfessorTO> professores;
