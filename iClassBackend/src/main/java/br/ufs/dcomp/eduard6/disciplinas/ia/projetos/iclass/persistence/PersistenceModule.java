@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  * banco de dados.
  * 
  * @author Eduardo Fillipe da Silva Reis
- *
+ * @param K Tipo da conexão com o banco de dados.
  */
 public abstract class PersistenceModule <K>{
 
@@ -46,6 +46,11 @@ public abstract class PersistenceModule <K>{
 	public String getPropertie(String key) {
 		return properties.get(key);
 	}
-
+	
+	/**
+	 * Retorna uma conexão com o banco de dados. 
+	 * 
+	 * @return Uma forma de conexão com o banco de dados
+	 */
 	public abstract K getConnection();
 }

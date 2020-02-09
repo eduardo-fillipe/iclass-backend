@@ -25,7 +25,8 @@ public abstract class AbstractMongoDao<K> {
 
 	private CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
 			fromProviders(PojoCodecProvider.builder()
-					.register("br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo").automatic(true)
+					.register("br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo")
+					.automatic(true)
 					.build()));
 
 	public AbstractMongoDao(String collectionName, Class<K> pojoClass) {
