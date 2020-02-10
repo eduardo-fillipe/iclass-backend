@@ -17,9 +17,9 @@ public class TestePersistence {
 				//new ArrayList<DisciplinaTO>(), (short)30));
 		//ProfessorDAO.getInstance().removerProfessor("123");
 		
-		//DisciplinaDAO.getInstance().inserirDisciplina(new DisciplinaTO("Estrutura de Dados", "ED001", (short)06));
-		
-		System.out.println(ProfessorDAO.getInstance().getProfessor("123"));
+		//DisciplinaDAO.getInstance().inserirDisciplina(new DisciplinaTO("Laboratório de Redes", "LR001", (short)06, true));
+		DisciplinaDAO.getInstance().inserirDisciplina(new DisciplinaTO("Compiladores", "CP001", (short)04, true));
+		System.out.println(DisciplinaDAO.getInstance().getDisciplinas());
 		
 	}
 }

@@ -51,13 +51,14 @@ public class DisciplinaDAO extends AbstractMongoDao<DisciplinaPOJO>{
 	}
 	
 	public List<DisciplinaTO> getDisciplinas() {
-		List<DisciplinaTO> disciplinas = new ArrayList<DisciplinaTO>();
+		List<DisciplinaTO> disciplinas = new ArrayList<>();
 		
 		getCollection().find().iterator().forEachRemaining(result -> {
 			DisciplinaTO d = new DisciplinaTO();
 			d.setCargaHoraria(result.getCargaHoraria());
 			d.setCodigo(result.getCodigo());
 			d.setNome(result.getNome());
+			d.setPrecisaLaboratorio(result.isPrecisaLaboratorio());
 			disciplinas.add(d);
 		});
 		

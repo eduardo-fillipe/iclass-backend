@@ -9,17 +9,18 @@ public class DisciplinaTO extends TransferObjectBase{
 	private String nome;
 	private String codigo;
 	private short cargaHoraria;
-	
+	private boolean precisaLaboratorio;
 	
 	public DisciplinaTO() {
 		super();
 	}
 	
-	public DisciplinaTO(String nome, String codigo, short cargaHoraria) {
+	public DisciplinaTO(String nome, String codigo, short cargaHoraria, boolean precisaLaboratorio) {
 		super();
 		this.nome = nome;
 		this.codigo = codigo;
 		this.cargaHoraria = cargaHoraria;
+		this.precisaLaboratorio = precisaLaboratorio;
 	}
 	
 	public String getNome() {
@@ -41,7 +42,15 @@ public class DisciplinaTO extends TransferObjectBase{
 		this.cargaHoraria = cargaHoraria;
 	}
 
-	@Override
+	public boolean isPrecisaLaboratorio() {
+        return precisaLaboratorio;
+    }
+
+    public void setPrecisaLaboratorio(boolean precisaLaboratorio) {
+        this.precisaLaboratorio = precisaLaboratorio;
+    }
+
+    @Override
 	public boolean equals(Object obj) {
 		if (obj instanceof String) {
 			String stringObj = (String) obj;
@@ -50,16 +59,18 @@ public class DisciplinaTO extends TransferObjectBase{
 		return false;	
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("DisciplinaTO [nome=");
-		builder.append(nome);
-		builder.append(", codigo=");
-		builder.append(codigo);
-		builder.append(", cargaHoraria=");
-		builder.append(cargaHoraria);
-		builder.append("]");
-		return builder.toString();
-	}	
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("DisciplinaTO [nome=");
+        builder.append(nome);
+        builder.append(", codigo=");
+        builder.append(codigo);
+        builder.append(", cargaHoraria=");
+        builder.append(cargaHoraria);
+        builder.append(", precisaLaboratorio=");
+        builder.append(precisaLaboratorio);
+        builder.append("]");
+        return builder.toString();
+    }
 }
