@@ -1,4 +1,7 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
+
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.DisciplinaPOJO;
+
 /**
  * Classe que representa da Disciplina como TO.
  * 
@@ -21,6 +24,12 @@ public class DisciplinaTO extends TransferObjectBase{
 		this.codigo = codigo;
 		this.cargaHoraria = cargaHoraria;
 		this.precisaLaboratorio = precisaLaboratorio;
+	}
+	public DisciplinaTO(DisciplinaPOJO pojo) {
+		this.nome = pojo.getNome();
+		this.codigo = pojo.getCodigo();
+		this.cargaHoraria = pojo.getCargaHoraria();
+		this.precisaLaboratorio = pojo.isPrecisaLaboratorio();
 	}
 	
 	public String getNome() {
