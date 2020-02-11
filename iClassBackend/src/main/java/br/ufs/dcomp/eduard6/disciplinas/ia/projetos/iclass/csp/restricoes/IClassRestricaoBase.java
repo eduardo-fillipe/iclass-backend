@@ -1,8 +1,6 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes;
 
-import java.util.List;
-
-import aima.core.search.csp.Assignment;
+import aima.core.search.csp.Constraint;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.IClassCSP;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
@@ -11,19 +9,18 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVa
  * 
  * @author Eduardo Fillipe da Silva Reis
  */
-public class CargaHorariaProfessor extends IClassRestricaoBase {
-
-	public CargaHorariaProfessor(IClassCSP iClassCSP) {
-		super(iClassCSP);
+public abstract class IClassRestricaoBase implements Constraint<TurmaVariable, IClassDomainRepresentation> {
+	protected IClassCSP iClassCSP;
+	
+	public IClassRestricaoBase(IClassCSP iClassCSP) {
+		this.iClassCSP = iClassCSP;
 	}
 
-	@Override
-	public List<TurmaVariable> getScope() {
-		return null;
+	public IClassCSP getiClassCSP() {
+		return iClassCSP;
 	}
 
-	@Override
-	public boolean isSatisfiedWith(Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
-		return false;
+	public void setiClassCSP(IClassCSP iClassCSP) {
+		this.iClassCSP = iClassCSP;
 	}
 }

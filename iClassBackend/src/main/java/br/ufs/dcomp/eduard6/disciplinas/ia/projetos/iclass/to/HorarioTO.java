@@ -1,6 +1,8 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe que representa o Horario como TO.
@@ -43,6 +45,7 @@ public class HorarioTO extends TransferObjectBase {
 
 	/**
 	 * Constrói um horárioTO vazio a partir de um código dado.
+	 * 
 	 * @param codigoHorario
 	 * @return
 	 */
@@ -59,6 +62,34 @@ public class HorarioTO extends TransferObjectBase {
 		this.dia = dia;
 		this.horarioSequencia = horarioSequencia;
 		this.turma = turma;
+	}
+
+	public List<HorarioTO> transformarEmSequenciaDois() {
+		ArrayList<HorarioTO> novos = new ArrayList<HorarioTO>();
+
+		int quantidadeHorariosTam2 = this.getHorarioSequencia().getValor() / 2;
+
+		if (quantidadeHorariosTam2 > 1) {
+			for (int i = 0; i < quantidadeHorariosTam2; i++) {
+				HorarioTO horarioNovo = new HorarioTO();
+				horarioNovo.setDia(this.dia);
+				horarioNovo.setHorarioSequencia(HorarioSequencia.DOIS);
+				char n = this.codigo.substring(i * 2).charAt(0);
+				horarioNovo.setNumeroHorario(Short.valueOf(String.valueOf(n)));
+				StringBuilder stringBuilder = new StringBuilder();
+				stringBuilder.append(horarioNovo.getDia().getValue() + 1);
+				stringBuilder.append(this.codigo.charAt(1));
+				stringBuilder.append(horarioNovo.getNumeroHorario());
+				stringBuilder.append(horarioNovo.getNumeroHorario() + 1);
+				horarioNovo.setCodigo(stringBuilder.toString());
+				novos.add(horarioNovo);
+			}
+		} else {
+			novos.add(this);
+			return novos;
+		}
+
+		return novos;
 	}
 
 	/**
