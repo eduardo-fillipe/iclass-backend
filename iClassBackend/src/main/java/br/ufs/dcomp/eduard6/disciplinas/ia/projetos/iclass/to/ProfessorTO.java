@@ -1,6 +1,9 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.ProfessorPOJO;
 
 /**
  * Representa um Professor.
@@ -27,6 +30,19 @@ public class ProfessorTO extends TransferObjectBase{
 		this.matricula = matricula;
 		this.preferencias = preferencias;
 		this.cargaHorariaSemanal = cargaHorariaSemanal;
+	}
+	
+	public ProfessorTO(ProfessorPOJO pojo) {
+		this.nome = pojo.getNome();
+		this.cargaHorariaSemanal = pojo.getCargaHorariaSemanal();
+		this.matricula = pojo.getMatricula();
+		this.preferencias = new ArrayList<DisciplinaTO>();
+				
+		pojo.getPreferencias().forEach(d -> {
+			DisciplinaTO disciplina = new DisciplinaTO();
+			disciplina.setCodigo(d);
+			this.preferencias.add(disciplina);
+		});
 	}
 	
 	public ProfessorTO() {

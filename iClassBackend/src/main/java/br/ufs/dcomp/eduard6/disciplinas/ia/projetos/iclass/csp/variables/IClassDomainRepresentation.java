@@ -1,15 +1,23 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables;
 
-public class TurmaDomainRepresentation {
-	private String cdTurma;
+public class IClassDomainRepresentation {
+	private String cdHorario;
 	private String cdProfessor;
-	
-	public String getCdTurma() {
-		return cdTurma;
+	private String uniqueCod;
+
+	public IClassDomainRepresentation(String cdHorario, String cdProfessor, String uniqueCod) {
+		super();
+		this.cdHorario = cdHorario;
+		this.cdProfessor = cdProfessor;
+		this.uniqueCod = uniqueCod;
 	}
 
-	public void setCdTurma(String cdTurma) {
-		this.cdTurma = cdTurma;
+	public String getCdHorario() {
+		return cdHorario;
+	}
+
+	public void setCdHorario(String cdHorario) {
+		this.cdHorario = cdHorario;
 	}
 
 	public String getCdProfessor() {
@@ -18,5 +26,13 @@ public class TurmaDomainRepresentation {
 
 	public void setCdProfessor(String cdProfessor) {
 		this.cdProfessor = cdProfessor;
+	}
+
+	public String getUniqueCod() {
+		return uniqueCod;
+	}
+
+	public void setUniqueCod(String uniqueCod) {
+		this.uniqueCod = uniqueCod;
 	}
 }

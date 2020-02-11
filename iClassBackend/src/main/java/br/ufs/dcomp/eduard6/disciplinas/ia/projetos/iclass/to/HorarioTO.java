@@ -2,14 +2,14 @@ package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
 
 import java.time.DayOfWeek;
 
-
 /**
  * Classe que representa o Horario como TO.
+ * 
  * @author Eduardo Fillipe da Silva Reis
  *
  */
 public class HorarioTO extends TransferObjectBase {
-	
+
 	private String codigo;
 	private DayOfWeek dia;
 	/**
@@ -21,51 +21,53 @@ public class HorarioTO extends TransferObjectBase {
 	 * Numero do horário (primeiro, segundo, terceiro horário?)
 	 */
 	private short numeroHorario;
-	
+
 	/**
 	 * Representa as sequencias de horários que as turmas podem assumir.
 	 * 
 	 * @author Eduardo Fillipe da Silva Reis
 	 */
 	public enum HorarioSequencia {
-	    DOIS((short) 2), QUATRO((short) 4);
-	    
-	    private short valor;
-	    
-	    private HorarioSequencia(short horarioSequencia) {
-            this.valor = horarioSequencia;
-        }
-	    
-	    public short getValor() {
-	        return valor;
-	    }
+		DOIS((short) 2), QUATRO((short) 4);
+
+		private short valor;
+
+		private HorarioSequencia(short horarioSequencia) {
+			this.valor = horarioSequencia;
+		}
+
+		public short getValor() {
+			return valor;
+		}
 	}
-	
+
 	/**
 	 * Constrói um horárioTO vazio a partir de um código dado.
 	 * @param codigoHorario
 	 * @return
 	 */
 	public static HorarioTO fromCodigo(String codigoHorario) {
-		throw new UnsupportedOperationException("Ainda não implementado.");
+		throw new UnsupportedOperationException("Não implementado.");
 	}
 
 	public HorarioTO(String codigo, DayOfWeek dia, HorarioSequencia horarioSequencia, TurmaTO turma) {
 		super();
-		if (!isCodigoValido())
-		    throw new IllegalArgumentException("Código de horário inválido.");
-		
+		if (!isCodigoValido(codigo))
+			throw new IllegalArgumentException("Código de horário inválido.");
+
 		this.codigo = codigo;
 		this.dia = dia;
 		this.horarioSequencia = horarioSequencia;
 		this.turma = turma;
 	}
+
 	/**
 	 * Método auxiliar que verifica se um dado código é válido.
+	 * 
 	 * @return true se o código for válido.
 	 */
-	private boolean isCodigoValido(){
-	   throw new UnsupportedOperationException("Ainda não implementado.");
+	private static boolean isCodigoValido(String codigo) {
+		throw new UnsupportedOperationException("Não implementado.");
 	}
 
 	public HorarioTO() {
@@ -85,14 +87,14 @@ public class HorarioTO extends TransferObjectBase {
 	}
 
 	public short getNumeroHorario() {
-        return numeroHorario;
-    }
+		return numeroHorario;
+	}
 
-    public void setNumeroHorario(short numeroHorario) {
-        this.numeroHorario = numeroHorario;
-    }
+	public void setNumeroHorario(short numeroHorario) {
+		this.numeroHorario = numeroHorario;
+	}
 
-    public void setDia(DayOfWeek dia) {
+	public void setDia(DayOfWeek dia) {
 		this.dia = dia;
 	}
 
@@ -135,5 +137,14 @@ public class HorarioTO extends TransferObjectBase {
 
 	public void setTurma(TurmaTO turma) {
 		this.turma = turma;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("HorarioTO [codigo=");
+		builder.append(codigo);
+		builder.append("]");
+		return builder.toString();
 	}
 }

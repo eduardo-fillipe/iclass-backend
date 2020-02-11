@@ -11,7 +11,18 @@ import java.util.List;
 public class ProblemaOrganizacaoTO extends TransferObjectBase {
 
 	public enum TurnoGrade {
-		MANHA, TARDE, NOITE
+		MANHA("M"), TARDE("T"), NOITE("N");
+		
+		private String value;
+
+		private TurnoGrade(String value) {
+			this.value = value;
+		}
+		
+		public String getValue() {
+			return this.value;
+		}
+		
 	}
 
 	/**

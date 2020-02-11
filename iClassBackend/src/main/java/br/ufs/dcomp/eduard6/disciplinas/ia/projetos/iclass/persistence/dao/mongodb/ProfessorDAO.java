@@ -14,6 +14,9 @@ import static com.mongodb.client.model.Aggregates.match;
 import static com.mongodb.client.model.Aggregates.unwind;
 import static com.mongodb.client.model.Accumulators.first;
 import static com.mongodb.client.model.Accumulators.push;
+import static com.mongodb.client.model.Filters.regex;
+import static com.mongodb.client.model.Aggregates.sort;
+import static com.mongodb.client.model.Sorts.ascending;
 
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.MongoDBConnectionManager;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.ProfessorPOJO;
@@ -21,7 +24,8 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.DisciplinaTO;
 
 /**
- * Classe responsável pelas interações relacionadas a professores com o banco de dados.
+ * Classe responsável pelas interações relacionadas a professores com o banco de
+ * dados.
  * 
  * @author Eduardo Fillipe da Silva Reis
  *
@@ -38,7 +42,7 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 	public static ProfessorDAO getInstance() {
 		return INSTANCE;
 	}
-	
+
 	/**
 	 * Altera um professor.
 	 * 
@@ -47,19 +51,20 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 	public void alterarProfessor(ProfessorTO professor) {
 
 	}
-	
+
 	/**
-	 * Retorna um professor da a matrícula.
-	 * As preferências desse professor possuem apenas o código. 
-	 * Para que seja retornada a disciplina completa use: {@link #getProfessorCompleto(String)}
+	 * Retorna um professor da a matrícula. As preferências desse professor possuem
+	 * apenas o código. Para que seja retornada a disciplina completa use:
+	 * {@link #getProfessorCompleto(String)}
 	 * 
 	 * @param matricula Matricula do professor
-	 * @return Um professorTO sem os a disciplina preenchida, apenas o código da mesma.
+	 * @return Um professorTO sem os a disciplina preenchida, apenas o código da
+	 *         mesma.
 	 */
 	public ProfessorTO getProfessor(String matricula) {
-		
+
 		ProfessorPOJO pp = getCollection().find(new Document("matricula", matricula)).first();
-		
+
 		ProfessorTO p = new ProfessorTO();
 		p.setNome(pp.getNome());
 		p.setMatricula(pp.getMatricula());
@@ -111,7 +116,7 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 	public List<ProfessorTO> getProfessores() {
 		List<ProfessorTO> p = new ArrayList<ProfessorTO>();
 		ArrayList<DisciplinaTO> ds = new ArrayList<DisciplinaTO>();
-		
+
 		getCollection().find().iterator().forEachRemaining(o -> {
 
 			for (String pr : o.getPreferencias()) {
@@ -132,5 +137,24 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 
 	public void removerProfessor(String matricula) {
 		getCollection().deleteOne(new Document("matricula", matricula));
+	}
+
+	/**
+	 * Retorna uma lista de professores que contem um determinado nome.\
+	 * 
+	 * @param nome   Nome do professor a ser buscado.
+	 * @param limite Limite de resultados.
+	 * @return Lista de professores que possuem o nome buscado.
+	 */
+	public List<ProfessorTO> getProfessoresPorNome(String nome, int limite) {
+		List<ProfessorTO> professorTOs = new ArrayList<>();
+
+		getCollection()
+				.aggregate(Arrays.asList(match(regex("nome", nome, "i")), sort(ascending("nome")), limit(limite)))
+				.iterator().forEachRemaining(p -> {
+					professorTOs.add(new ProfessorTO(p));
+				});
+
+		return professorTOs;
 	}
 }
