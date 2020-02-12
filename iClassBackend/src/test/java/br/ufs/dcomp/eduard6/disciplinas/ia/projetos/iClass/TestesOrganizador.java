@@ -30,6 +30,7 @@ public class TestesOrganizador {
 		problema.setTurmasObrigatorias(turmasObrigatorias);
 		problema.setTurmasPredefinida(turmasPredef);
 		problema.setTurnoGrade(TurnoGrade.TARDE);
+		
 		organizador.organize(problema);
 	}
 }

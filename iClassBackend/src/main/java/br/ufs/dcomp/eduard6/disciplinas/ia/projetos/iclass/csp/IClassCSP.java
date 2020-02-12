@@ -34,7 +34,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 	/*
 	 * Logger desta classe.
 	 */
-	private static Logger LOGGER = Logger.getLogger(IClassCSP.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(IClassCSP.class.getName());
 
 	public IClassCSP(ProblemaOrganizacaoTO problema) {
 		long tempoInicial = 0;
@@ -42,64 +42,62 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 		long tempoTotal = 0;
 
 		this.problema = problema;
-		this.turmasObrigatorias = new HashSet<TurmaTO>();
-		this.turmasPredefinidas = new HashSet<TurmaTO>();
-		this.professores = new HashSet<ProfessorTO>();
-		this.horarios = new HashSet<HorarioTO>();
+		this.turmasObrigatorias = new HashSet<>();
+		this.turmasPredefinidas = new HashSet<>();
+		this.professores = new HashSet<>();
+		this.horarios = new HashSet<>();
 
 		LOGGER.log(Level.INFO, "Verificando argumentos...");
 		tempoInicial = System.currentTimeMillis();
 		verificarArgumentos(problema);
 		tempoParcial = System.currentTimeMillis();
 		tempoTotal += tempoInicial - tempoParcial;
-		LOGGER.log(Level.INFO, "Ok! Tempo(ms): " + (tempoParcial - tempoInicial));
+		LOGGER.log(Level.INFO, "Ok! Tempo(ms): {0}", (tempoParcial - tempoInicial));
 		
 		LOGGER.log(Level.INFO, "Normalizando Horários...");
 		tempoInicial = System.currentTimeMillis();
 		normalizarHorarios(problema);
 		tempoParcial = System.currentTimeMillis();
 		tempoTotal += tempoInicial - tempoParcial;
-		LOGGER.log(Level.INFO, "Ok! Tempo(ms): " + (tempoParcial - tempoInicial));
+		LOGGER.log(Level.INFO, "Ok! Tempo(ms): {0}", (tempoParcial - tempoInicial));
 
 		LOGGER.log(Level.INFO, "Carregando conjuntos...");
 		tempoInicial = System.currentTimeMillis();
 		loadSets(this.problema);
 		tempoParcial = System.currentTimeMillis();
 		tempoTotal += tempoInicial - tempoParcial;
-		LOGGER.log(Level.INFO, "Ok! Tempo(ms): " + (tempoParcial - tempoInicial));
+		LOGGER.log(Level.INFO, "Ok! Tempo(ms): {0}", (tempoParcial - tempoInicial));
 
 		LOGGER.log(Level.INFO, "Gerando Horarios Disponíveis...");
 		tempoInicial = System.currentTimeMillis();
 		gerarHorarios(problema);
 		tempoParcial = System.currentTimeMillis();
 		tempoTotal += tempoInicial - tempoParcial;
-		LOGGER.log(Level.INFO, "Ok! Total de horários adicionados: " + horarios.size() + ". Tempo(ms): "
-				+ (tempoParcial - tempoInicial));
+		LOGGER.log(Level.INFO, "Ok! Total de horários adicionados: {0}. Tempo(ms): {1}", new Object[] {horarios.size(), (tempoParcial - tempoInicial)});
 
 		LOGGER.log(Level.INFO, "Gerando Dominio do Problema (Horarios x Professor)...");
 		tempoInicial = System.currentTimeMillis();
 		dominioProblema = gerarDominioProblema(horarios, professores);
 		tempoParcial = System.currentTimeMillis();
 		tempoTotal += tempoInicial - tempoParcial;
-		LOGGER.log(Level.INFO, "Ok! Total de valores de domínio gerados: " + this.horarios.size() + ". Tempo(ms): "
-				+ (tempoParcial - tempoInicial));
+	    LOGGER.log(Level.INFO, "Ok! Total de valores de domínio gerados: {0}. Tempo(ms): {1}", new Object[] {dominioProblema.size(), (tempoParcial - tempoInicial)});
+
 
 		LOGGER.log(Level.INFO, "Adicionando as Turmas como variáveis do problema...");
 		tempoInicial = System.currentTimeMillis();
 		adicionarVariaveisAoProblema();
 		tempoParcial = System.currentTimeMillis();
 		tempoTotal += tempoInicial - tempoParcial;
-		LOGGER.log(Level.INFO, "Ok! Total de variáveis adicionadas " + getVariables().size() + ". Tempo(ms): "
-				+ (tempoParcial - tempoInicial));
+	    LOGGER.log(Level.INFO, "Ok! Total de variáveis adicionadas: {0}. Tempo(ms): {1}", new Object[] {getVariables().size(), (tempoParcial - tempoInicial)});
 
 		LOGGER.log(Level.INFO, "Adicionando as Restricoes do problema...");
 		tempoInicial = System.currentTimeMillis();
 		adicionarRestricoes();
 		tempoParcial = System.currentTimeMillis();
 		tempoTotal += tempoInicial - tempoParcial;
-		LOGGER.log(Level.INFO, "Ok! Tempo(ms): " + (tempoParcial - tempoInicial));
+		LOGGER.log(Level.INFO, "Ok! Tempo(ms): {0}", (tempoParcial - tempoInicial));
 
-		LOGGER.log(Level.INFO, "Construção do CSP finalizada. Tempo(ms): " + tempoTotal);
+		LOGGER.log(Level.INFO, "Construção do CSP finalizada. Tempo(ms): {0}", tempoTotal);
 	}
 
 	/**
@@ -112,7 +110,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 	 */
 	private List<IClassDomainRepresentation> gerarDominioProblema(Set<HorarioTO> horarios,
 			Set<ProfessorTO> professores) {
-		List<IClassDomainRepresentation> result = new ArrayList<IClassDomainRepresentation>();
+		List<IClassDomainRepresentation> result = new ArrayList<>();
 
 		horarios.forEach(horario -> { // Para cada horário disponível.
 			professores.forEach(professor -> { // Gere cada combinação possível de professor.
@@ -131,12 +129,12 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 	private void normalizarHorarios(ProblemaOrganizacaoTO problema) {
 		for (TurmaTO turma : problema.getTurmasPredefinidas()) {
 			ArrayList<HorarioTO> novosHorarios = new ArrayList<>();
-			ArrayList<HorarioTO> horarios = new ArrayList<>(turma.getHorariosAulas().values());
-			for (int i = 0; i < horarios.size(); i ++) {
-				if (horarios.get(i).getHorarioSequencia() != HorarioSequencia.DOIS) {
-					novosHorarios.addAll(horarios.get(i).transformarEmSequenciaDois());
+			ArrayList<HorarioTO> horariosTurma = new ArrayList<>(turma.getHorariosAulas().values());
+			for (int i = 0; i < horariosTurma.size(); i ++) {
+				if (horariosTurma.get(i).getHorarioSequencia() != HorarioSequencia.DOIS) {
+					novosHorarios.addAll(horariosTurma.get(i).transformarEmSequenciaDois());
 				} else {
-					novosHorarios.add(horarios.get(i));
+					novosHorarios.add(horariosTurma.get(i));
 				}
 			}
 			turma.getHorariosAulas().clear();
@@ -162,13 +160,13 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 
 		for (TurmaTO turmaPredefinida : this.turmasPredefinidas) {
 			int quantidadeHorarios = turmaPredefinida.getDisciplina().getCargaHoraria() / MIN_DOMAIN_PROBLEM_SIZE;
-			ArrayList<HorarioTO> horarios = new ArrayList<>(turmaPredefinida.getHorariosAulas().values());
+			ArrayList<HorarioTO> horariosTurma = new ArrayList<>(turmaPredefinida.getHorariosAulas().values());
 			
 			for (int i = 0; i < quantidadeHorarios; i++) {
 				TurmaVariable turmaVariable = new TurmaVariable(turmaPredefinida, quantidadeHorarios, i);
 				addVariable(turmaVariable);
 				
-				Domain<IClassDomainRepresentation> dominioTurmaPredefinida = new Domain<>(new IClassDomainRepresentation(horarios.get(i).getCodigo(), turmaPredefinida.getProfessor().getMatricula()));
+				Domain<IClassDomainRepresentation> dominioTurmaPredefinida = new Domain<>(new IClassDomainRepresentation(horariosTurma.get(i).getCodigo(), turmaPredefinida.getProfessor().getMatricula()));
 				
 				setDomain(turmaVariable, dominioTurmaPredefinida);
 			}
@@ -179,7 +177,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 	 * Adiciona as restricoes ao csp.
 	 */
 	private void adicionarRestricoes() {
-
+	    //throw new UnsupportedOperationException("Não implementado.");
 	}
 
 	/**
@@ -269,6 +267,9 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 			if (turma.getDisciplina().getCargaHoraria() % 2 != 0)
 				throw new IllegalArgumentException(
 						"Todas as disciplinas devem possuir carga horaria múltipla de 2:" + turma);
+			
+			if (turma.getProfessor() == null)
+			    throw new IllegalArgumentException("Todas as disciplinas predefinidas devem possuir um professor associado." + turma);
 		}
 
 		if (sum > problema.getCargaHorariaGrade() * 5)
