@@ -3,6 +3,8 @@ package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.DisciplinaPOJO;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.ProfessorCompletoPOJO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.ProfessorPOJO;
 
 /**
@@ -47,6 +49,17 @@ public class ProfessorTO extends TransferObjectBase{
 	
 	public ProfessorTO() {
 		super();
+	}
+	
+	public ProfessorTO(ProfessorCompletoPOJO pojo) {
+		this.cargaHorariaSemanal = pojo.getCargaHorariaSemanal();
+		this.matricula = pojo.getMatricula();
+		this.nome = pojo.getNome();
+		this.preferencias = new ArrayList<DisciplinaTO>();
+		
+		for (DisciplinaPOJO d : pojo.getPreferencias()) {
+			preferencias.add(new DisciplinaTO(d));
+		}
 	}
 
 	public String getNome() {

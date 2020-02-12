@@ -46,4 +46,8 @@ public abstract class AbstractMongoDao<K> {
 	public MongoDatabase getDatabase() {
 		return MongoDBConnectionManager.getInstance().getDatabase();
 	}
+	
+	public CodecRegistry getCodec() {
+		return this.pojoCodecRegistry;
+	}
 }

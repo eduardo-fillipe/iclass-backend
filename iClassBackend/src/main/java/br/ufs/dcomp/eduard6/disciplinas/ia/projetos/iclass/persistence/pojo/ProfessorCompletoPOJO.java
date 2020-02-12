@@ -22,6 +22,10 @@ public class ProfessorCompletoPOJO {
 		this.cargaHorariaSemanal = cargaHorariaSemanal;
 	}
 	
+	public ProfessorCompletoPOJO() {
+		
+	}
+	
 	public static ProfessorCompletoPOJO fromTO(ProfessorTO professor) {
 		ProfessorCompletoPOJO p = new ProfessorCompletoPOJO(professor.getNome(),
 				professor.getMatricula(),

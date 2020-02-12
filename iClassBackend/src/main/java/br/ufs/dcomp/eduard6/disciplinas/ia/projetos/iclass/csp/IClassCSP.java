@@ -51,50 +51,49 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 		tempoInicial = System.currentTimeMillis();
 		verificarArgumentos(problema);
 		tempoParcial = System.currentTimeMillis();
-		tempoTotal += tempoInicial - tempoParcial;
+		tempoTotal += tempoParcial - tempoInicial;
 		LOGGER.log(Level.INFO, "Ok! Tempo(ms): {0}", (tempoParcial - tempoInicial));
 		
 		LOGGER.log(Level.INFO, "Normalizando Horários...");
 		tempoInicial = System.currentTimeMillis();
 		normalizarHorarios(problema);
 		tempoParcial = System.currentTimeMillis();
-		tempoTotal += tempoInicial - tempoParcial;
+		tempoTotal += tempoParcial - tempoInicial;
 		LOGGER.log(Level.INFO, "Ok! Tempo(ms): {0}", (tempoParcial - tempoInicial));
 
 		LOGGER.log(Level.INFO, "Carregando conjuntos...");
 		tempoInicial = System.currentTimeMillis();
 		loadSets(this.problema);
 		tempoParcial = System.currentTimeMillis();
-		tempoTotal += tempoInicial - tempoParcial;
+		tempoTotal += tempoParcial - tempoInicial;
 		LOGGER.log(Level.INFO, "Ok! Tempo(ms): {0}", (tempoParcial - tempoInicial));
 
 		LOGGER.log(Level.INFO, "Gerando Horarios Disponíveis...");
 		tempoInicial = System.currentTimeMillis();
 		gerarHorarios(problema);
 		tempoParcial = System.currentTimeMillis();
-		tempoTotal += tempoInicial - tempoParcial;
+		tempoTotal += tempoParcial - tempoInicial;
 		LOGGER.log(Level.INFO, "Ok! Total de horários adicionados: {0}. Tempo(ms): {1}", new Object[] {horarios.size(), (tempoParcial - tempoInicial)});
 
 		LOGGER.log(Level.INFO, "Gerando Dominio do Problema (Horarios x Professor)...");
 		tempoInicial = System.currentTimeMillis();
 		dominioProblema = gerarDominioProblema(horarios, professores);
 		tempoParcial = System.currentTimeMillis();
-		tempoTotal += tempoInicial - tempoParcial;
+		tempoTotal += tempoParcial - tempoInicial;
 	    LOGGER.log(Level.INFO, "Ok! Total de valores de domínio gerados: {0}. Tempo(ms): {1}", new Object[] {dominioProblema.size(), (tempoParcial - tempoInicial)});
-
 
 		LOGGER.log(Level.INFO, "Adicionando as Turmas como variáveis do problema...");
 		tempoInicial = System.currentTimeMillis();
 		adicionarVariaveisAoProblema();
 		tempoParcial = System.currentTimeMillis();
-		tempoTotal += tempoInicial - tempoParcial;
+		tempoTotal += tempoParcial - tempoInicial;
 	    LOGGER.log(Level.INFO, "Ok! Total de variáveis adicionadas: {0}. Tempo(ms): {1}", new Object[] {getVariables().size(), (tempoParcial - tempoInicial)});
 
 		LOGGER.log(Level.INFO, "Adicionando as Restricoes do problema...");
 		tempoInicial = System.currentTimeMillis();
 		adicionarRestricoes();
 		tempoParcial = System.currentTimeMillis();
-		tempoTotal += tempoInicial - tempoParcial;
+		tempoTotal += tempoParcial - tempoInicial;
 		LOGGER.log(Level.INFO, "Ok! Tempo(ms): {0}", (tempoParcial - tempoInicial));
 
 		LOGGER.log(Level.INFO, "Construção do CSP finalizada. Tempo(ms): {0}", tempoTotal);

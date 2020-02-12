@@ -19,6 +19,7 @@ import static com.mongodb.client.model.Aggregates.sort;
 import static com.mongodb.client.model.Sorts.ascending;
 
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.MongoDBConnectionManager;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.ProfessorCompletoPOJO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.ProfessorPOJO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.DisciplinaTO;
@@ -115,18 +116,20 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 
 	public List<ProfessorTO> getProfessores() {
 		List<ProfessorTO> p = new ArrayList<ProfessorTO>();
-		ArrayList<DisciplinaTO> ds = new ArrayList<DisciplinaTO>();
 
-		getCollection().find().iterator().forEachRemaining(o -> {
-
-			for (String pr : o.getPreferencias()) {
-				DisciplinaTO d = new DisciplinaTO();
-				d.setCodigo(pr);
-				ds.add(d);
-			}
-
-			p.add(new ProfessorTO(o.getNome(), o.getMatricula(), ds, o.getCargaHorariaSemanal()));
-		});
+		getDatabase()
+				.getCollection(
+						MongoDBConnectionManager.getInstance().getPropertie("iclass.mongodb.collectionname.professor"),
+						ProfessorCompletoPOJO.class)
+				.withCodecRegistry(getCodec())
+				.aggregate(Arrays.asList(unwind("$preferencias"),
+						lookup("disciplina", "preferencias", "codigo", "preferencias"), unwind("$preferencias"),
+						group("$_id", first("nome", "$nome"), first("cargaHorariaSemanal", "$cargaHorariaSemanal"),
+								first("matricula", "$matricula"), push("preferencias", "$preferencias"))))
+				.iterator()
+				.forEachRemaining(professorCompleto -> {
+					p.add(new ProfessorTO(professorCompleto));
+				});
 
 		return p;
 	}
