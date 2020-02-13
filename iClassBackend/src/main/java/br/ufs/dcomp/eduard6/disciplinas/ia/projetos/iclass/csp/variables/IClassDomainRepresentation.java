@@ -73,4 +73,10 @@ public class IClassDomainRepresentation {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "IClassDomainRepresentation [cdHorario=" + cdHorario + ", cdProfessor=" + cdProfessor + ", uniqueCod="
+				+ uniqueCod + "]";
+	}
 }

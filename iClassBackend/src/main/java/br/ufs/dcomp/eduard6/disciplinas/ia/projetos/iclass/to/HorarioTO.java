@@ -74,8 +74,10 @@ public class HorarioTO extends TransferObjectBase {
 				HorarioTO horarioNovo = new HorarioTO();
 				horarioNovo.setDia(this.dia);
 				horarioNovo.setHorarioSequencia(HorarioSequencia.DOIS);
-				char n = this.codigo.substring(i * 2).charAt(0);
-				horarioNovo.setNumeroHorario(Short.valueOf(String.valueOf(n)));
+				
+				char n = this.codigo.substring((i * 2) + 2).charAt(0);
+				horarioNovo.setNumeroHorario((short)(Short.valueOf(String.valueOf(n))));
+				
 				StringBuilder stringBuilder = new StringBuilder();
 				stringBuilder.append(horarioNovo.getDia().getValue() + 1);
 				stringBuilder.append(this.codigo.charAt(1));
@@ -172,10 +174,7 @@ public class HorarioTO extends TransferObjectBase {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("HorarioTO [codigo=");
-		builder.append(codigo);
-		builder.append("]");
-		return builder.toString();
+		return "HorarioTO [codigo=" + codigo + ", dia=" + dia + ", horarioSequencia=" + horarioSequencia + ", turma="
+				+ turma + ", numeroHorario=" + numeroHorario + "]";
 	}
 }

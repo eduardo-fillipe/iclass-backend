@@ -191,7 +191,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 	}
 
 	private boolean isHorarioPredefinido(HorarioTO horario) {
-		for (TurmaTO t : turmasPredefinidas) {
+		for (TurmaTO t : this.turmasPredefinidas) {
 			if (t.possuiHorario(horario))
 				return true;
 		}
@@ -215,7 +215,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 				stringBuilder.append(h);
 				stringBuilder.append(h + 1);
 				horarioTO.setCodigo(stringBuilder.toString());
-				if (isHorarioPredefinido(horarioTO)) { // Redução do problema em termos de horarios já ocupados por
+				if (!isHorarioPredefinido(horarioTO)) { // Redução do problema em termos de horarios já ocupados por
 														// outras // disciplinas
 					this.horarios.add(horarioTO);
 				}
@@ -280,8 +280,19 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 		return horarios;
 	}
 
-	public List<IClassDomainRepresentation> getPossiveisTurmas() {
+	public List<IClassDomainRepresentation> getDominioProblema() {
 		return dominioProblema;
 	}
-
+	
+	public Set<ProfessorTO> getProfessores() {
+		return this.professores;
+	}
+	
+	public Set<TurmaTO> getTurmasObrigatorias() {
+		return this.turmasObrigatorias;
+	}
+	
+	public Set<TurmaTO> getTurmasPredefinidas() {
+		return this.turmasPredefinidas;
+	}
 }
