@@ -8,8 +8,21 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.TurmaTO;
  * @author Eduardo Fillipe da Silva Reis
  */
 public class TurmaVariable extends Variable {
+	/**
+	 * Turma associada a essa Variável.
+	 */
 	private TurmaTO turmaAssociada;
-	private int quantidadeHorarios;
+	/**
+	 * Quantidade total de variáveis que essa turma possui.
+	 */
+	private int quantidadeHorarios; 
+	/**
+	 * Identificador da instancia dessa turma. 
+	 * 
+	 * 0 <= idHorarioTurma < quantidadeHorarios.
+	 * 
+	 * Utilizado para identificar unicamente esse variável no csp.
+	 */
 	private int idHorarioTurma;
 
 	public TurmaVariable(String uniqueName, TurmaTO turma, int quantidadeDivisoes, int idHorarioTurma) {

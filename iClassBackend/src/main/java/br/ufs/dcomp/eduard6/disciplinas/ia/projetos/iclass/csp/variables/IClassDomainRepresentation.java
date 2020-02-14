@@ -1,54 +1,45 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables;
 
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
+
 public class IClassDomainRepresentation {
-	private String cdHorario;
-	private String cdProfessor;
+	private HorarioTO horario;
+	private ProfessorTO professor;
 	private String uniqueCod;
 
-	public IClassDomainRepresentation(String cdHorario, String cdProfessor, String uniqueCod) {
+	public IClassDomainRepresentation(HorarioTO horario, ProfessorTO professor, String uniqueCod) {
 		super();
-		this.cdHorario = cdHorario;
-		this.cdProfessor = cdProfessor;
+		this.horario = horario;
+		this.professor = professor;
 		this.uniqueCod = uniqueCod;
 	}
 	
-	public IClassDomainRepresentation(String cdHorario, String cdProfessor) {
+	public IClassDomainRepresentation(HorarioTO horario, ProfessorTO professor) {
 		super();
-		this.cdHorario = cdHorario;
-		this.cdProfessor = cdProfessor;
-		this.uniqueCod = cdHorario + "." + cdProfessor;
+		this.horario = horario;
+		this.professor = professor;
+		this.uniqueCod = horario.getCodigo() + "." + professor.getMatricula();
 	}
 
-	public String getCdHorario() {
-		return cdHorario;
+	public HorarioTO getHorario() {
+		return horario;
 	}
 
-	public void setCdHorario(String cdHorario) {
-		this.cdHorario = cdHorario;
-	}
-
-	public String getCdProfessor() {
-		return cdProfessor;
-	}
-
-	public void setCdProfessor(String cdProfessor) {
-		this.cdProfessor = cdProfessor;
+	public ProfessorTO getProfessor() {
+		return professor;
 	}
 
 	public String getUniqueCod() {
 		return uniqueCod;
 	}
 
-	public void setUniqueCod(String uniqueCod) {
-		this.uniqueCod = uniqueCod;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cdHorario == null) ? 0 : cdHorario.hashCode());
-		result = prime * result + ((cdProfessor == null) ? 0 : cdProfessor.hashCode());
+		result = prime * result + ((horario == null) ? 0 : horario.hashCode());
+		result = prime * result + ((professor == null) ? 0 : professor.hashCode());
 		return result;
 	}
 
@@ -61,22 +52,16 @@ public class IClassDomainRepresentation {
 		if (getClass() != obj.getClass())
 			return false;
 		IClassDomainRepresentation other = (IClassDomainRepresentation) obj;
-		if (cdHorario == null) {
-			if (other.cdHorario != null)
+		if (horario == null) {
+			if (other.horario != null)
 				return false;
-		} else if (!cdHorario.equals(other.cdHorario))
+		} else if (!horario.equals(other.horario))
 			return false;
-		if (cdProfessor == null) {
-			if (other.cdProfessor != null)
+		if (professor == null) {
+			if (other.professor != null)
 				return false;
-		} else if (!cdProfessor.equals(other.cdProfessor))
+		} else if (!professor.equals(other.professor))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "IClassDomainRepresentation [cdHorario=" + cdHorario + ", cdProfessor=" + cdProfessor + ", uniqueCod="
-				+ uniqueCod + "]";
 	}
 }

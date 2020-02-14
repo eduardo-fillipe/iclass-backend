@@ -53,7 +53,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 		tempoParcial = System.currentTimeMillis();
 		tempoTotal += tempoParcial - tempoInicial;
 		LOGGER.log(Level.INFO, "Ok! Tempo(ms): {0}", (tempoParcial - tempoInicial));
-		
+
 		LOGGER.log(Level.INFO, "Normalizando Horários...");
 		tempoInicial = System.currentTimeMillis();
 		normalizarHorarios(problema);
@@ -73,21 +73,24 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 		gerarHorarios(problema);
 		tempoParcial = System.currentTimeMillis();
 		tempoTotal += tempoParcial - tempoInicial;
-		LOGGER.log(Level.INFO, "Ok! Total de horários adicionados: {0}. Tempo(ms): {1}", new Object[] {horarios.size(), (tempoParcial - tempoInicial)});
+		LOGGER.log(Level.INFO, "Ok! Total de horários adicionados: {0}. Tempo(ms): {1}",
+				new Object[] { horarios.size(), (tempoParcial - tempoInicial) });
 
 		LOGGER.log(Level.INFO, "Gerando Dominio do Problema (Horarios x Professor)...");
 		tempoInicial = System.currentTimeMillis();
 		dominioProblema = gerarDominioProblema(horarios, professores);
 		tempoParcial = System.currentTimeMillis();
 		tempoTotal += tempoParcial - tempoInicial;
-	    LOGGER.log(Level.INFO, "Ok! Total de valores de domínio gerados: {0}. Tempo(ms): {1}", new Object[] {dominioProblema.size(), (tempoParcial - tempoInicial)});
+		LOGGER.log(Level.INFO, "Ok! Total de valores de domínio gerados: {0}. Tempo(ms): {1}",
+				new Object[] { dominioProblema.size(), (tempoParcial - tempoInicial) });
 
 		LOGGER.log(Level.INFO, "Adicionando as Turmas como variáveis do problema...");
 		tempoInicial = System.currentTimeMillis();
 		adicionarVariaveisAoProblema();
 		tempoParcial = System.currentTimeMillis();
 		tempoTotal += tempoParcial - tempoInicial;
-	    LOGGER.log(Level.INFO, "Ok! Total de variáveis adicionadas: {0}. Tempo(ms): {1}", new Object[] {getVariables().size(), (tempoParcial - tempoInicial)});
+		LOGGER.log(Level.INFO, "Ok! Total de variáveis adicionadas: {0}. Tempo(ms): {1}",
+				new Object[] { getVariables().size(), (tempoParcial - tempoInicial) });
 
 		LOGGER.log(Level.INFO, "Adicionando as Restricoes do problema...");
 		tempoInicial = System.currentTimeMillis();
@@ -113,15 +116,15 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 
 		horarios.forEach(horario -> { // Para cada horário disponível.
 			professores.forEach(professor -> { // Gere cada combinação possível de professor.
-				IClassDomainRepresentation iClassDomainRepresentation = new IClassDomainRepresentation(
-						horario.getCodigo(), professor.getMatricula());
+				IClassDomainRepresentation iClassDomainRepresentation = new IClassDomainRepresentation(horario,
+						professor);
 				result.add(iClassDomainRepresentation);
 			});
 		});
 
 		return result;
 	}
-	
+
 	/**
 	 * Transforma todos os horários das turmas predefinidas de tamanho 4 para 2.
 	 */
@@ -129,7 +132,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 		for (TurmaTO turma : problema.getTurmasPredefinidas()) {
 			ArrayList<HorarioTO> novosHorarios = new ArrayList<>();
 			ArrayList<HorarioTO> horariosTurma = new ArrayList<>(turma.getHorariosAulas().values());
-			for (int i = 0; i < horariosTurma.size(); i ++) {
+			for (int i = 0; i < horariosTurma.size(); i++) {
 				if (horariosTurma.get(i).getHorarioSequencia() != HorarioSequencia.DOIS) {
 					novosHorarios.addAll(horariosTurma.get(i).transformarEmSequenciaDois());
 				} else {
@@ -160,13 +163,14 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 		for (TurmaTO turmaPredefinida : this.turmasPredefinidas) {
 			int quantidadeHorarios = turmaPredefinida.getDisciplina().getCargaHoraria() / MIN_DOMAIN_PROBLEM_SIZE;
 			ArrayList<HorarioTO> horariosTurma = new ArrayList<>(turmaPredefinida.getHorariosAulas().values());
-			
+
 			for (int i = 0; i < quantidadeHorarios; i++) {
 				TurmaVariable turmaVariable = new TurmaVariable(turmaPredefinida, quantidadeHorarios, i);
 				addVariable(turmaVariable);
-				
-				Domain<IClassDomainRepresentation> dominioTurmaPredefinida = new Domain<>(new IClassDomainRepresentation(horariosTurma.get(i).getCodigo(), turmaPredefinida.getProfessor().getMatricula()));
-				
+
+				Domain<IClassDomainRepresentation> dominioTurmaPredefinida = new Domain<>(
+						new IClassDomainRepresentation(horariosTurma.get(i), turmaPredefinida.getProfessor()));
+
 				setDomain(turmaVariable, dominioTurmaPredefinida);
 			}
 		}
@@ -176,7 +180,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 	 * Adiciona as restricoes ao csp.
 	 */
 	private void adicionarRestricoes() {
-	    //throw new UnsupportedOperationException("Não implementado.");
+		// throw new UnsupportedOperationException("Não implementado.");
 	}
 
 	/**
@@ -216,7 +220,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 				stringBuilder.append(h + 1);
 				horarioTO.setCodigo(stringBuilder.toString());
 				if (!isHorarioPredefinido(horarioTO)) { // Redução do problema em termos de horarios já ocupados por
-														// outras // disciplinas
+														// outras disciplinas obrigatórias.
 					this.horarios.add(horarioTO);
 				}
 			}
@@ -266,9 +270,10 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 			if (turma.getDisciplina().getCargaHoraria() % 2 != 0)
 				throw new IllegalArgumentException(
 						"Todas as disciplinas devem possuir carga horaria múltipla de 2:" + turma);
-			
+
 			if (turma.getProfessor() == null)
-			    throw new IllegalArgumentException("Todas as disciplinas predefinidas devem possuir um professor associado." + turma);
+				throw new IllegalArgumentException(
+						"Todas as disciplinas predefinidas devem possuir um professor associado." + turma);
 		}
 
 		if (sum > problema.getCargaHorariaGrade() * 5)
@@ -283,15 +288,15 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 	public List<IClassDomainRepresentation> getDominioProblema() {
 		return dominioProblema;
 	}
-	
+
 	public Set<ProfessorTO> getProfessores() {
 		return this.professores;
 	}
-	
+
 	public Set<TurmaTO> getTurmasObrigatorias() {
 		return this.turmasObrigatorias;
 	}
-	
+
 	public Set<TurmaTO> getTurmasPredefinidas() {
 		return this.turmasPredefinidas;
 	}
