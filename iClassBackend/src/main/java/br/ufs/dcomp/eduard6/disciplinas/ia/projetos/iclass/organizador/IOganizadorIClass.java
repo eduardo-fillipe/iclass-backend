@@ -1,7 +1,8 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador;
 
-import java.util.List;
-
+import aima.core.search.csp.CspSolver;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.GradeTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProblemaOrganizacaoTO;
 
@@ -12,5 +13,6 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProblemaOrganizaca
  *
  */
 public interface IOganizadorIClass {
-	public List<GradeTO> organize(ProblemaOrganizacaoTO problema);
+	public GradeTO organize(ProblemaOrganizacaoTO problema,
+			CspSolver<TurmaVariable, IClassDomainRepresentation> solver);
 }

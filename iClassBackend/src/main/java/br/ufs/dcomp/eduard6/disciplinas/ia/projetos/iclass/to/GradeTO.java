@@ -1,4 +1,12 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
+
+import java.util.List;
+
+import aima.core.search.csp.Assignment;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.IClassCSP;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
+
 /**
  * Classe que representa da Grade como TO.
  * 
@@ -7,23 +15,37 @@ package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
  */
 public class GradeTO extends TransferObjectBase{
 	
-	@SuppressWarnings("unused")
-	private HorarioTO[][] grade;
-
-	public GradeTO(short cargaHorariaMaximaDiaria) {
+	private List<HorarioTO> horarios;
+	private IClassCSP csp;
+	private Assignment<TurmaVariable, IClassDomainRepresentation> assignment;
+	
+	public GradeTO(Assignment<TurmaVariable, IClassDomainRepresentation> assignment, IClassCSP csp) {
 		super();
-		grade = new HorarioTO[5][cargaHorariaMaximaDiaria];
+		this.assignment = assignment;
+		this.csp = csp;
 	}
-	
-	public boolean addTurmaHorario(String codigoHorario, TurmaTO turma) {
-		throw new UnsupportedOperationException("Not implemented yet.");
+
+	public List<HorarioTO> getHorarios() {
+		return horarios;
 	}
-	
-	public boolean removerTurmaHorario(String codigoHorario, TurmaTO turma) {
-		throw new UnsupportedOperationException("Not implemented yet.");
+
+	public void setHorarios(List<HorarioTO> horarios) {
+		this.horarios = horarios;
 	}
-	
-	public HorarioTO getHorarioByCodigo(String codigo) {
-		throw new UnsupportedOperationException("Not implemented yet.");
+
+	public IClassCSP getCsp() {
+		return csp;
+	}
+
+	public void setCsp(IClassCSP csp) {
+		this.csp = csp;
+	}
+
+	public Assignment<TurmaVariable, IClassDomainRepresentation> getAssignment() {
+		return assignment;
+	}
+
+	public void setAssignment(Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
+		this.assignment = assignment;
 	}
 }
