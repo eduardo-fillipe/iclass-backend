@@ -53,7 +53,7 @@ public class HorarioTO extends TransferObjectBase {
 		throw new UnsupportedOperationException("Não implementado.");
 	}
 
-	public HorarioTO(String codigo, DayOfWeek dia, HorarioSequencia horarioSequencia, TurmaTO turma) {
+	public HorarioTO(String codigo, DayOfWeek dia, HorarioSequencia horarioSequencia, TurmaTO turma, short numeroHorario) {
 		super();
 		if (!isCodigoValido(codigo))
 			throw new IllegalArgumentException("Código de horário inválido.");
@@ -62,6 +62,7 @@ public class HorarioTO extends TransferObjectBase {
 		this.dia = dia;
 		this.horarioSequencia = horarioSequencia;
 		this.turma = turma;
+		this.numeroHorario = numeroHorario;
 	}
 
 	public List<HorarioTO> transformarEmSequenciaDois() {
@@ -100,7 +101,7 @@ public class HorarioTO extends TransferObjectBase {
 	 * @return true se o código for válido.
 	 */
 	private static boolean isCodigoValido(String codigo) {
-		throw new UnsupportedOperationException("Não implementado.");
+		return true;
 	}
 
 	public HorarioTO() {
