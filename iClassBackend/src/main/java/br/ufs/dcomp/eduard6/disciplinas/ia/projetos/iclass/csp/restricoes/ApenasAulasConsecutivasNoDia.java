@@ -7,6 +7,14 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.IClassCSP;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
 
+/**
+ * Se uma turma tem horário num dia X, todos os horários são consecutivos. 
+ * Exemplo VÁLIDO para uma turma de 4 créditos que tem aula apenas no dia X: XT12 e XT34
+ * Exemplo INVÁLIDO para uma turma de 4 créditos que tem aula apenas no dia X: XT12 e XT56
+ * 
+ * @author Eduardo Fillipe da Silva Reis
+ *
+ */
 public class ApenasAulasConsecutivasNoDia extends IClassRestricaoBase{
 
 	public ApenasAulasConsecutivasNoDia(IClassCSP iClassCSP) {
