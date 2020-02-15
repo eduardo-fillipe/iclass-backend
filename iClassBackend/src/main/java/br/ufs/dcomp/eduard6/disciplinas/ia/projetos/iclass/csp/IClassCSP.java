@@ -241,8 +241,8 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 		if (problema.getTurmasPredefinidas() == null)
 			throw new IllegalArgumentException("A lista de Turmas Predefinidas precisa ser fornecida.");
 
-		if (problema.getCargaHorariaGrade() == 0)
-			throw new IllegalArgumentException("A carga horária diária da grade deve ser > 0.");
+		if (problema.getCargaHorariaGrade() < MIN_DOMAIN_PROBLEM_SIZE)
+			throw new IllegalArgumentException("A carga horária diária da grade deve ser >= 2.");
 
 		int sum = 0;
 
@@ -278,7 +278,6 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 
 		if (sum > problema.getCargaHorariaGrade() * 5)
 			throw new IllegalArgumentException("A quantidade de Turmas excede a carga horária máxima do período.");
-
 	}
 
 	public Set<HorarioTO> getHorarios() {
