@@ -18,11 +18,13 @@ public class GradeTO extends TransferObjectBase{
 	private List<HorarioTO> horarios;
 	private IClassCSP csp;
 	private Assignment<TurmaVariable, IClassDomainRepresentation> assignment;
+	private MetricaTO metricas;
 	
-	public GradeTO(Assignment<TurmaVariable, IClassDomainRepresentation> assignment, IClassCSP csp) {
+	public GradeTO(Assignment<TurmaVariable, IClassDomainRepresentation> assignment, IClassCSP csp, MetricaTO metricas) {
 		super();
 		this.assignment = assignment;
 		this.csp = csp;
+		this.metricas = metricas;
 	}
 
 	public List<HorarioTO> getHorarios() {
@@ -47,5 +49,25 @@ public class GradeTO extends TransferObjectBase{
 
 	public void setAssignment(Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
 		this.assignment = assignment;
+	}
+
+	public MetricaTO getMetricas() {
+		return metricas;
+	}
+
+	public void setMetricas(MetricaTO metricas) {
+		this.metricas = metricas;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("GradeTO [horarios=\n");
+		for(HorarioTO horario : horarios) {
+			builder.append(horario);
+			builder.append("\n");
+		}
+		builder.append("]");
+		return builder.toString();
 	}
 }

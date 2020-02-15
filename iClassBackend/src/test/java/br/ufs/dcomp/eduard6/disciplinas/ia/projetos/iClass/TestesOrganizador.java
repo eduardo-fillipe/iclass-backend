@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import aima.core.search.csp.FlexibleBacktrackingSolver;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.OrganizadorIClass;
-import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
-import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.IOganizadorIClass;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.IOganizadorIClass.CspSolverEnum;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.dao.mongodb.DisciplinaDAO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.dao.mongodb.ProfessorDAO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.DisciplinaTO;
@@ -22,8 +20,6 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProblemaOrganizaca
 
 public class TestesOrganizador {
 	public static void main(String[] args) {
-		IOganizadorIClass organizador = new OrganizadorIClass();
-
 		//Professores
 		List<ProfessorTO> professorTOs = ProfessorDAO.getInstance().getProfessores();
 		ProfessorTO estombelo = ProfessorDAO.getInstance().getProfessorCompleto("1");
@@ -61,7 +57,7 @@ public class TestesOrganizador {
 		problema.setTurmasPredefinida(turmasPredef);
 		problema.setTurnoGrade(TurnoGrade.TARDE);
 
-		organizador.organize(problema,
-				new FlexibleBacktrackingSolver<TurmaVariable, IClassDomainRepresentation>().setAll());
+		IOganizadorIClass organizador = new OrganizadorIClass(problema, CspSolverEnum.BACKTRACKING_WITH_HEURISTCS);
+		System.out.println(organizador.organize());
 	}
 }

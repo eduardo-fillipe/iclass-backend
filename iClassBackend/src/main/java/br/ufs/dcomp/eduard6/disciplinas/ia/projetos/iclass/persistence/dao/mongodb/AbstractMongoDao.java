@@ -16,7 +16,7 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.MongoDBCo
  * 
  * @author Eduardo Fillipe da Silva Reis
  *
- * @param <K>
+ * @param <K> Tipo de Pojo Relacionado ao tipo principal desse DAO.
  */
 public abstract class AbstractMongoDao<K> {
 
