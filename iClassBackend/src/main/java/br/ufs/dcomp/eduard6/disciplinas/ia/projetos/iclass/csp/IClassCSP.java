@@ -2,8 +2,10 @@ package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +32,10 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 	private Set<HorarioTO> horarios;
 	private ProblemaOrganizacaoTO problema;
 	private List<IClassDomainRepresentation> dominioProblema;
+	/**
+	 * Link de Variáveis que essa turma possui para consulta rápida.
+	 */
+	private Map<TurmaTO, List<TurmaVariable>> fragmentosTurma;
 	public static final int MIN_DOMAIN_PROBLEM_SIZE = 2;
 	/*
 	 * Logger desta classe.
@@ -46,6 +52,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 		this.turmasPredefinidas = new HashSet<>();
 		this.professores = new HashSet<>();
 		this.horarios = new HashSet<>();
+		this.fragmentosTurma = new HashMap<>();
 
 		LOGGER.log(Level.INFO, "Verificando argumentos...");
 		tempoInicial = System.currentTimeMillis();
@@ -153,26 +160,34 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 		Domain<IClassDomainRepresentation> dominioTurmasObrigatorias = new Domain<>(dominioProblema);
 		for (TurmaTO turma : this.turmasObrigatorias) {
 			int quantidadeHorarios = turma.getDisciplina().getCargaHoraria() / MIN_DOMAIN_PROBLEM_SIZE;
+			List<TurmaVariable> turmasVariableTurma = new ArrayList<>(quantidadeHorarios); // Variaveis que essa turma
+																							// possui.
 			for (int i = 0; i < quantidadeHorarios; i++) {
 				TurmaVariable turmaVariable = new TurmaVariable(turma, quantidadeHorarios, i);
+				turmasVariableTurma.add(turmaVariable);
 				addVariable(turmaVariable);
 				setDomain(turmaVariable, dominioTurmasObrigatorias);
 			}
+			this.fragmentosTurma.put(turma, turmasVariableTurma); // Adiciona um índice de variaveis que essa turma
+																	// possui.
 		}
 
 		for (TurmaTO turmaPredefinida : this.turmasPredefinidas) {
 			int quantidadeHorarios = turmaPredefinida.getDisciplina().getCargaHoraria() / MIN_DOMAIN_PROBLEM_SIZE;
+			List<TurmaVariable> turmasVariableTurma = new ArrayList<>(quantidadeHorarios); // Variaveis que essa turma
+																							// possui.
 			ArrayList<HorarioTO> horariosTurma = new ArrayList<>(turmaPredefinida.getHorariosAulas().values());
 
 			for (int i = 0; i < quantidadeHorarios; i++) {
 				TurmaVariable turmaVariable = new TurmaVariable(turmaPredefinida, quantidadeHorarios, i);
+				turmasVariableTurma.add(turmaVariable);
 				addVariable(turmaVariable);
-
 				Domain<IClassDomainRepresentation> dominioTurmaPredefinida = new Domain<>(
 						new IClassDomainRepresentation(horariosTurma.get(i), turmaPredefinida.getProfessor()));
-
 				setDomain(turmaVariable, dominioTurmaPredefinida);
 			}
+			this.fragmentosTurma.put(turmaPredefinida, turmasVariableTurma); // Adiciona um índice de variaveis que essa
+																				// turma possui.
 		}
 	}
 
@@ -225,6 +240,17 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Retorna todos as variaveis derivadas de uma turma.
+	 * Complexidade: O(1)
+	 * 
+	 * @param turma Turma a ser consultada.
+	 * @return Lista com todas aas variáveis do problema que estão relacionadas a essa turma.
+	 */
+	public List<TurmaVariable> getFragmentosTurma(TurmaTO turma) {
+		return this.fragmentosTurma.get(turma);
 	}
 
 	/**

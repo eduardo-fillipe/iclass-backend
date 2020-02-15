@@ -2,6 +2,7 @@ package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @author Eduardo Fillipe da Silva Reis
  *
  */
-public class HorarioTO extends TransferObjectBase {
+public class HorarioTO extends TransferObjectBase implements Comparable<HorarioTO> {
 
 	private String codigo;
 	private DayOfWeek dia;
@@ -53,7 +54,8 @@ public class HorarioTO extends TransferObjectBase {
 		throw new UnsupportedOperationException("Não implementado.");
 	}
 
-	public HorarioTO(String codigo, DayOfWeek dia, HorarioSequencia horarioSequencia, TurmaTO turma, short numeroHorario) {
+	public HorarioTO(String codigo, DayOfWeek dia, HorarioSequencia horarioSequencia, TurmaTO turma,
+			short numeroHorario) {
 		super();
 		if (!isCodigoValido(codigo))
 			throw new IllegalArgumentException("Código de horário inválido.");
@@ -75,10 +77,10 @@ public class HorarioTO extends TransferObjectBase {
 				HorarioTO horarioNovo = new HorarioTO();
 				horarioNovo.setDia(this.dia);
 				horarioNovo.setHorarioSequencia(HorarioSequencia.DOIS);
-				
+
 				char n = this.codigo.substring((i * 2) + 2).charAt(0);
-				horarioNovo.setNumeroHorario((short)(Short.valueOf(String.valueOf(n))));
-				
+				horarioNovo.setNumeroHorario((short) (Short.valueOf(String.valueOf(n))));
+
 				StringBuilder stringBuilder = new StringBuilder();
 				stringBuilder.append(horarioNovo.getDia().getValue() + 1);
 				stringBuilder.append(this.codigo.charAt(1));
@@ -93,6 +95,34 @@ public class HorarioTO extends TransferObjectBase {
 		}
 
 		return novos;
+	}
+
+	/**
+	 * Verifica se uma dada sequencia de horários é consecutiva.
+	 * O(nlog(n))
+	 * @param horarios
+	 * @return
+	 */
+	public static boolean isConsecutivos(List<HorarioTO> horarios) {
+		ArrayList<List<HorarioTO>> dias = new ArrayList<List<HorarioTO>>();
+		for (int i = 1; i <= DayOfWeek.FRIDAY.getValue(); i++) //O(5)
+			dias.add(new ArrayList<HorarioTO>());
+		
+		for (HorarioTO horario : horarios) { //O(n)
+			if (horario != null)
+				dias.get(horario.getDia().getValue()).add(horario);
+		}
+		
+		for (List<HorarioTO> dia : dias) { //O(n)
+			if (dia.size() > 1) {
+				Collections.sort(dia); //O(log(n))
+				for (int i = 0; i < dia.size() - 1; i++) {
+					if (dia.get(i).numeroHorario + 2 != dia.get(i + 1).numeroHorario) 
+						return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -177,5 +207,27 @@ public class HorarioTO extends TransferObjectBase {
 	public String toString() {
 		return "HorarioTO [codigo=" + codigo + ", dia=" + dia + ", horarioSequencia=" + horarioSequencia + ", turma="
 				+ turma + ", numeroHorario=" + numeroHorario + "]";
+	}
+
+	@Override
+	public int compareTo(HorarioTO o) {
+		if (this.getDia().getValue() > o.getDia().getValue()) {
+			return 1;
+		} else {
+			if (this.getDia().getValue() < o.getDia().getValue()) {
+				return -1;
+			} else {
+				if (this.getNumeroHorario() > o.getNumeroHorario()) {
+					return 1;
+				} else {
+					if (this.getNumeroHorario() < o.getNumeroHorario()) {
+						return -1;
+					} else {
+						return 0;
+					}
+				}
+				
+			}
+		}
 	}
 }

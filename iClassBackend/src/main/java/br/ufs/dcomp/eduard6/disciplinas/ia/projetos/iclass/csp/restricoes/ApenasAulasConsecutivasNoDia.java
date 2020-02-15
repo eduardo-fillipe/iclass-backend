@@ -1,11 +1,14 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import aima.core.search.csp.Assignment;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.IClassCSP;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.TurmaTO;
 
 /**
  * Se uma turma tem horário num dia X, todos os horários são consecutivos. 
@@ -16,22 +19,26 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVa
  *
  */
 public class ApenasAulasConsecutivasNoDia extends IClassRestricaoBase{
-
-	public ApenasAulasConsecutivasNoDia(IClassCSP iClassCSP) {
+	private TurmaTO turma;
+	public ApenasAulasConsecutivasNoDia(IClassCSP iClassCSP, TurmaTO turma) {
 		super(iClassCSP);
-		// TODO Auto-generated constructor stub
+		this.turma = turma;
 	}
 
 	@Override
 	public List<TurmaVariable> getScope() {
-		// TODO Auto-generated method stub
-		return null;
+		return getiClassCSP().getFragmentosTurma(turma);
 	}
 
 	@Override
 	public boolean isSatisfiedWith(Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
-		// TODO Auto-generated method stub
-		return false;
+		List<HorarioTO> horarios = new ArrayList<>();
+		for (TurmaVariable turmaVariable : getScope()) {
+			IClassDomainRepresentation value = assignment.getValue(turmaVariable);
+			if (value != null) {
+				horarios.add(value.getHorario());
+			}
+		}
+		return HorarioTO.isConsecutivos(horarios);
 	}
-
 }
