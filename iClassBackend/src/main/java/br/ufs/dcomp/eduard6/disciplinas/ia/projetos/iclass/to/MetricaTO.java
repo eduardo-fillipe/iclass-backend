@@ -1,6 +1,6 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
 
-import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.IOganizadorIClass.CspSolverEnum;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.OganizadorIClassBase.CspSolverEnum;
 
 public class MetricaTO extends TransferObjectBase {
 	private int quantidadeAtribuicoes;

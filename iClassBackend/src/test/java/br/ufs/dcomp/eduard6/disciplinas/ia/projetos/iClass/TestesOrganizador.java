@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.OrganizadorIClass;
-import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.IOganizadorIClass;
-import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.IOganizadorIClass.CspSolverEnum;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.OganizadorIClassBase;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.OganizadorIClassBase.CspSolverEnum;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.dao.mongodb.DisciplinaDAO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.dao.mongodb.ProfessorDAO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.DisciplinaTO;
@@ -57,7 +57,7 @@ public class TestesOrganizador {
 		problema.setTurmasPredefinida(turmasPredef);
 		problema.setTurnoGrade(TurnoGrade.TARDE);
 
-		IOganizadorIClass organizador = new OrganizadorIClass(problema, CspSolverEnum.BACKTRACKING_WITH_HEURISTCS);
+		OganizadorIClassBase organizador = new OrganizadorIClass(problema, CspSolverEnum.BACKTRACKING_WITH_HEURISTCS);
 		System.out.println(organizador.organize());
 	}
 }

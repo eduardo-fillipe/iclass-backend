@@ -15,12 +15,12 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProblemaOrganizaca
  * @author Eduardo Fillipe da Silva Reis
  *
  */
-public abstract class IOganizadorIClass {
+public abstract class OganizadorIClassBase {
 	private ProblemaOrganizacaoTO problema;
 	private CspSolverEnum solverAlgorithm;
 	CspSolver<TurmaVariable, IClassDomainRepresentation> solver;
 
-	public IOganizadorIClass(ProblemaOrganizacaoTO problema, CspSolverEnum solverAlgorithm) {
+	public OganizadorIClassBase(ProblemaOrganizacaoTO problema, CspSolverEnum solverAlgorithm) {
 		this.problema = problema;
 		this.solverAlgorithm = solverAlgorithm;
 		solver = getSolverFromEnum();

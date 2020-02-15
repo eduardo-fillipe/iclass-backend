@@ -11,7 +11,7 @@ import aima.core.search.csp.CspListener;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.IClassCSP;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
-import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.IOganizadorIClass;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.OganizadorIClassBase;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.GradeTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.MetricaTO;
@@ -19,7 +19,7 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProblemaOrganizaca
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.TurmaTO;
 
-public class OrganizadorIClass extends IOganizadorIClass {
+public class OrganizadorIClass extends OganizadorIClassBase {
 
 	public OrganizadorIClass(ProblemaOrganizacaoTO problema, CspSolverEnum solverAlgorithm) {
 		super(problema, solverAlgorithm);
