@@ -10,6 +10,13 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassD
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.DisciplinaTO;
 
+/**
+ * Nenhum professor pode lecionar disciplinas que não estejam na sua lista de
+ * preferências.
+ * 
+ * @author Eduardo Fillipe da Silva Reis
+ *
+ */
 public class PreferenciaProfessor extends IClassRestricaoBase {
 
 	private TurmaVariable turma;

@@ -6,6 +6,7 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassD
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
 
 /**
+ * Classe base para restrições do organizador IClass.
  * 
  * @author Eduardo Fillipe da Silva Reis
  */

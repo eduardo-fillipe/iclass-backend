@@ -8,24 +8,31 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassD
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
 
 /**
- * A quantidades de aulas que um professor dá, deve menor ou igual que a carga
- * horária de trabalho semanal.
+ * O mesmo professor deve ministrar todas as aulas de uma turma.
+ * 
+ * Restrição opcional: O não uso dela abre espaço para que mais de um professor
+ * ministre a mesma disciplina, como é o caso de Edilayne e Ricardo Pinheiro.
  * 
  * @author Eduardo Fillipe da Silva Reis
+ *
  */
-public class CargaHorariaProfessor extends IClassRestricaoBase {
+public class ProfessorResponsavelAulasTurma extends IClassRestricaoBase {
 
-	public CargaHorariaProfessor(IClassCSP iClassCSP) {
+	public ProfessorResponsavelAulasTurma(IClassCSP iClassCSP) {
 		super(iClassCSP);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public List<TurmaVariable> getScope() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean isSatisfiedWith(Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
-		return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
+
 }

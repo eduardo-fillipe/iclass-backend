@@ -8,14 +8,15 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassD
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
 
 /**
- * A quantidades de aulas que um professor dá, deve menor ou igual que a carga
- * horária de trabalho semanal.
+ * Não podem haver aulas paralelas, ou seja, turmas não podem ter os horários
+ * iguais, mesmo que sejam ocupados por professores diferentes.
  * 
  * @author Eduardo Fillipe da Silva Reis
+ *
  */
-public class CargaHorariaProfessor extends IClassRestricaoBase {
+public class AulasParalelas extends IClassRestricaoBase {
 
-	public CargaHorariaProfessor(IClassCSP iClassCSP) {
+	public AulasParalelas(IClassCSP iClassCSP) {
 		super(iClassCSP);
 	}
 
@@ -26,6 +27,7 @@ public class CargaHorariaProfessor extends IClassRestricaoBase {
 
 	@Override
 	public boolean isSatisfiedWith(Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
-		return true;
+		return false;
 	}
+
 }
