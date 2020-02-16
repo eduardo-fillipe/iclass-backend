@@ -14,7 +14,9 @@ import aima.core.search.csp.CSP;
 import aima.core.search.csp.Domain;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.AulasParalelas;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.CargaHorariaProfessor;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.PreferenciaProfessor;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.ProfessorResponsavelAulasTurma;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO.HorarioSequencia;
@@ -171,8 +173,10 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 				setDomain(turmaVariable, dominioTurmasObrigatorias);
 				addConstraint(new PreferenciaProfessor(this, turmaVariable));
 			}
+
 			this.fragmentosTurma.put(turma, turmasVariableTurma); // Adiciona um índice de variaveis que essa turma
 																	// possui.
+			addConstraint(new ProfessorResponsavelAulasTurma(this, turma));
 		}
 
 		for (TurmaTO turmaPredefinida : this.turmasPredefinidas) {
@@ -195,12 +199,13 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 	}
 
 	/**
-	 * Adiciona as restricoes ao csp.
-	 * <br><br>
-	 * Aulas Paralelas ({@link AulasParalelas}): Para a instancia de problema do
-	 * da disciplina, mesmo que as turmas sejam diferentes, elas não devem ter aulas
+	 * Adiciona as restricoes ao csp. <br>
+	 * <br>
+	 * Aulas Paralelas ({@link AulasParalelas}): Para a instancia de problema do da
+	 * disciplina, mesmo que as turmas sejam diferentes, elas não devem ter aulas
 	 * paralelas. Entretanto, num ambiente real, se fizerem parte de turmas
-	 * diferentes, podem haver aulas paralelas e essa parte do método deve ser alterada.
+	 * diferentes, podem haver aulas paralelas e essa parte do método deve ser
+	 * alterada.
 	 */
 	private void adicionarRestricoes() {
 		// Aulas Paralelas
@@ -209,6 +214,9 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 				addConstraint(new AulasParalelas(this, getVariables().get(i), getVariables().get(j)));
 			}
 		}
+
+		// Carga Horária de Professor
+		addConstraint(new CargaHorariaProfessor(this));
 	}
 
 	/**
@@ -320,6 +328,20 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 			if (turma.getProfessor() == null)
 				throw new IllegalArgumentException(
 						"Todas as disciplinas predefinidas devem possuir um professor associado." + turma);
+
+			HashMap<ProfessorTO, Integer> professorCargaHoraria = new HashMap<>();
+			ProfessorTO professor = turma.getProfessor();
+			Integer profCargaSum = professorCargaHoraria.get(professor);
+			if (profCargaSum == null) {
+				professorCargaHoraria.put(professor, (int) turma.getDisciplina().getCargaHoraria());
+			} else {
+				professorCargaHoraria.put(professor, profCargaSum + (int) turma.getDisciplina().getCargaHoraria());
+			}
+
+			if (professorCargaHoraria.get(professor) > professor.getCargaHorariaSemanal()) {
+				throw new IllegalArgumentException(
+						"Professor com disciplinas obrigatórias maior que a carga horária semanal: " + professor);
+			}
 		}
 
 		if (sum > problema.getCargaHorariaGrade() * 5)
