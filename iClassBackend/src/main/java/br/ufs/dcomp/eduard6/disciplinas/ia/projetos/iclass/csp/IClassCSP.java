@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Domain;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.AulasParalelas;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.PreferenciaProfessor;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO.HorarioSequencia;
@@ -167,6 +169,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 				turmasVariableTurma.add(turmaVariable);
 				addVariable(turmaVariable);
 				setDomain(turmaVariable, dominioTurmasObrigatorias);
+				addConstraint(new PreferenciaProfessor(this, turmaVariable));
 			}
 			this.fragmentosTurma.put(turma, turmasVariableTurma); // Adiciona um índice de variaveis que essa turma
 																	// possui.
@@ -193,9 +196,19 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 
 	/**
 	 * Adiciona as restricoes ao csp.
+	 * <br><br>
+	 * Aulas Paralelas ({@link AulasParalelas}): Para a instancia de problema do
+	 * da disciplina, mesmo que as turmas sejam diferentes, elas não devem ter aulas
+	 * paralelas. Entretanto, num ambiente real, se fizerem parte de turmas
+	 * diferentes, podem haver aulas paralelas e essa parte do método deve ser alterada.
 	 */
 	private void adicionarRestricoes() {
-		// throw new UnsupportedOperationException("Não implementado.");
+		// Aulas Paralelas
+		for (int i = 0; i < getVariables().size() - 1; i++) {
+			for (int j = i + 1; j < getVariables().size(); j++) {
+				addConstraint(new AulasParalelas(this, getVariables().get(i), getVariables().get(j)));
+			}
+		}
 	}
 
 	/**
@@ -209,6 +222,13 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 		turmasObrigatorias.addAll(problema.getTurmasObrigatorias());
 	}
 
+	/**
+	 * Verifica se o horário pertence à uma turma predefinida.
+	 * 
+	 * @param horario
+	 * @return <code>true</code> se o horário pertencer à uma turma predefinida ou
+	 *         <code>false</code> senão.
+	 */
 	private boolean isHorarioPredefinido(HorarioTO horario) {
 		for (TurmaTO t : this.turmasPredefinidas) {
 			if (t.possuiHorario(horario))
@@ -241,13 +261,13 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 			}
 		}
 	}
-	
+
 	/**
-	 * Retorna todos as variaveis derivadas de uma turma.
-	 * Complexidade: O(1)
+	 * Retorna todos as variaveis derivadas de uma turma. Complexidade: O(1)
 	 * 
 	 * @param turma Turma a ser consultada.
-	 * @return Lista com todas aas variáveis do problema que estão relacionadas a essa turma.
+	 * @return Lista com todas aas variáveis do problema que estão relacionadas a
+	 *         essa turma.
 	 */
 	public List<TurmaVariable> getFragmentosTurma(TurmaTO turma) {
 		return this.fragmentosTurma.get(turma);

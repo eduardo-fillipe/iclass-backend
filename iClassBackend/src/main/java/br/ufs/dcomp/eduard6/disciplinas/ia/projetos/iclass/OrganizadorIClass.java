@@ -1,7 +1,6 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +66,7 @@ public class OrganizadorIClass extends OganizadorIClassBase {
 		for (TurmaVariable turmaVariable : result.getVariables()) {
 			IClassDomainRepresentation valorTurmaVariable = result.getValue(turmaVariable);
 
-			HorarioTO horario = valorTurmaVariable.getHorario();
+			HorarioTO horario = new HorarioTO(valorTurmaVariable.getHorario());
 			ProfessorTO professor = valorTurmaVariable.getProfessor();
 			TurmaTO turma = turmaVariable.getTurmaAssociada();
 
@@ -80,7 +79,7 @@ public class OrganizadorIClass extends OganizadorIClassBase {
 			horarios.add(horario);
 		}
 
-		Collections.sort(horarios);
+		//Collections.sort(horarios);
 		grade.setHorarios(horarios);
 		return grade;
 	}

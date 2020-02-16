@@ -142,4 +142,10 @@ public class TurmaTO extends TransferObjectBase {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "TurmaTO [disciplina=" + disciplina.getNome() + ", professor=" + professor.getNome() + ", horariosAulas=" + horariosAulas.size()
+				+ ", codTurma=" + codTurma + "]";
+	}
 }

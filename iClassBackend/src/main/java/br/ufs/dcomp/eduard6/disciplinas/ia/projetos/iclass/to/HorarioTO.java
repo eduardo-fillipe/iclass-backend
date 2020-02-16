@@ -43,6 +43,14 @@ public class HorarioTO extends TransferObjectBase implements Comparable<HorarioT
 			return valor;
 		}
 	}
+	
+	public HorarioTO (HorarioTO horario) {
+		this.codigo = horario.getCodigo();
+		this.dia = horario.getDia();
+		this.horarioSequencia = horario.getHorarioSequencia();
+		this.numeroHorario = horario.getNumeroHorario();
+		this.turma = horario.getTurma();
+	}
 
 	/**
 	 * Constrói um horárioTO vazio a partir de um código dado.
@@ -226,7 +234,6 @@ public class HorarioTO extends TransferObjectBase implements Comparable<HorarioT
 						return 0;
 					}
 				}
-				
 			}
 		}
 	}

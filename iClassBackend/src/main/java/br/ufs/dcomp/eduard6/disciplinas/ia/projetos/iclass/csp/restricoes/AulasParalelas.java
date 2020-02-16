@@ -38,7 +38,7 @@ public class AulasParalelas extends IClassRestricaoBase {
 		IClassDomainRepresentation valor1 = assignment.getValue(turma1);
 		if (valor1 == null)
 			return true;
-		IClassDomainRepresentation valor2 = assignment.getValue(turma1);
+		IClassDomainRepresentation valor2 = assignment.getValue(turma2);
 		if (valor2 == null)
 			return true;
 		return !(valor1.getHorario().equals(valor2.getHorario()));
