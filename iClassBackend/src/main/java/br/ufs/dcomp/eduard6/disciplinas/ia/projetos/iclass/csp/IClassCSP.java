@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Domain;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.ApenasAulasConsecutivasNoDia;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.AulasParalelas;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.CargaHorariaProfessor;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.PreferenciaProfessor;
@@ -177,6 +178,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 			this.fragmentosTurma.put(turma, turmasVariableTurma); // Adiciona um índice de variaveis que essa turma
 																	// possui.
 			addConstraint(new ProfessorResponsavelAulasTurma(this, turma));
+			addConstraint(new ApenasAulasConsecutivasNoDia(this, turma));
 		}
 
 		for (TurmaTO turmaPredefinida : this.turmasPredefinidas) {

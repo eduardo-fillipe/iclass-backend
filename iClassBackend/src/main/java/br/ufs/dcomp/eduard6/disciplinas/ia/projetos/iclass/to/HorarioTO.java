@@ -118,7 +118,7 @@ public class HorarioTO extends TransferObjectBase implements Comparable<HorarioT
 		
 		for (HorarioTO horario : horarios) { //O(n)
 			if (horario != null)
-				dias.get(horario.getDia().getValue()).add(horario);
+				dias.get(horario.getDia().getValue() - 1).add(horario);
 		}
 		
 		for (List<HorarioTO> dia : dias) { //O(n)
