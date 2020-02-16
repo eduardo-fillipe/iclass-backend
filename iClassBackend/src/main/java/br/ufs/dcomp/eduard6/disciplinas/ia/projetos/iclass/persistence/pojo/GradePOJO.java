@@ -14,12 +14,14 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
  *
  */
 public class GradePOJO {
+	private String descricao;
 	private ObjectId _id;
 	private List<HorarioPOJO> horarios;
 	private MetricaPOJO metricas;
 
-	public GradePOJO(List<HorarioPOJO> horarios, MetricaPOJO metricas) {
+	public GradePOJO(String descricao, List<HorarioPOJO> horarios, MetricaPOJO metricas) {
 		super();
+		this.descricao = descricao;
 		this.horarios = horarios;
 		this.metricas = metricas;
 	}
@@ -27,7 +29,7 @@ public class GradePOJO {
 	public GradePOJO(GradeTO grade) {
 		this.metricas = new MetricaPOJO(grade.getMetricas());
 		this.horarios = new ArrayList<HorarioPOJO>(grade.getHorarios().size());
-
+		this.descricao = grade.getDescricao();
 		for (HorarioTO horarioTO : grade.getHorarios()) {
 			this.horarios.add(new HorarioPOJO(horarioTO));
 		}
@@ -55,5 +57,13 @@ public class GradePOJO {
 
 	public void set_id(ObjectId _id) {
 		this._id = _id;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 }

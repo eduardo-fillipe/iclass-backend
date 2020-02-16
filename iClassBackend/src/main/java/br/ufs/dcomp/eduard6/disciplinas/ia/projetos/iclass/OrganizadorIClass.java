@@ -65,7 +65,7 @@ public class OrganizadorIClass extends OganizadorIClassBase {
 
 		for (TurmaVariable turmaVariable : result.getVariables()) {
 			IClassDomainRepresentation valorTurmaVariable = result.getValue(turmaVariable);
-
+			
 			HorarioTO horario = new HorarioTO(valorTurmaVariable.getHorario());
 			ProfessorTO professor = valorTurmaVariable.getProfessor();
 			TurmaTO turma = turmaVariable.getTurmaAssociada();
@@ -81,6 +81,7 @@ public class OrganizadorIClass extends OganizadorIClassBase {
 
 		//Collections.sort(horarios);
 		grade.setHorarios(horarios);
+		grade.setDescricao(csp.getProblema().getDescricao());
 		return grade;
 	}
 

@@ -369,4 +369,12 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 	public Set<TurmaTO> getTurmasPredefinidas() {
 		return this.turmasPredefinidas;
 	}
+
+	public ProblemaOrganizacaoTO getProblema() {
+		return problema;
+	}
+
+	public void setProblema(ProblemaOrganizacaoTO problema) {
+		this.problema = problema;
+	}
 }

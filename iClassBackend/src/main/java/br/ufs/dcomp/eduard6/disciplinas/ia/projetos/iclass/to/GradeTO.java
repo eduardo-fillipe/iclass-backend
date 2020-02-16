@@ -15,6 +15,7 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVa
  */
 public class GradeTO extends TransferObjectBase{
 	
+	private String descricao;
 	private List<HorarioTO> horarios;
 	private IClassCSP csp;
 	private Assignment<TurmaVariable, IClassDomainRepresentation> assignment;
@@ -57,6 +58,14 @@ public class GradeTO extends TransferObjectBase{
 
 	public void setMetricas(MetricaTO metricas) {
 		this.metricas = metricas;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	@Override

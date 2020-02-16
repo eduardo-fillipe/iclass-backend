@@ -25,6 +25,8 @@ public class ProblemaOrganizacaoTO extends TransferObjectBase {
 		
 	}
 
+	private String descricao;
+	
 	/**
 	 * Lista de professores.
 	 */
@@ -107,5 +109,13 @@ public class ProblemaOrganizacaoTO extends TransferObjectBase {
 
 	public void setCargaHorariaGrade(int cargaHorariaGrade) {
 		this.cargaHorariaGrade = cargaHorariaGrade;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 }
