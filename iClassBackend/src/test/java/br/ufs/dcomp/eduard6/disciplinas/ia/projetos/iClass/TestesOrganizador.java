@@ -9,8 +9,10 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.OrganizadorIClass;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.OganizadorIClassBase;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.OganizadorIClassBase.CspSolverEnum;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.dao.mongodb.DisciplinaDAO;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.dao.mongodb.GradeDAO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.dao.mongodb.ProfessorDAO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.DisciplinaTO;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.GradeTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProblemaOrganizacaoTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
@@ -58,6 +60,8 @@ public class TestesOrganizador {
 		problema.setTurnoGrade(TurnoGrade.TARDE);
 
 		OganizadorIClassBase organizador = new OrganizadorIClass(problema, CspSolverEnum.BACKTRACKING_WITH_HEURISTCS);
-		System.out.println(organizador.organize());
+		GradeTO grade = organizador.organize();
+		System.out.println(grade);
+		GradeDAO.getInstance().inserirGrade(grade);
 	}
 }

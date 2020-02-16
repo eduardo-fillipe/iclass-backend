@@ -3,6 +3,8 @@ package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.TurmaPOJO;
+
 /**
  * Classe que representa uma turma.
  * 
@@ -17,6 +19,14 @@ public class TurmaTO extends TransferObjectBase {
 
 	public TurmaTO() {
 		super();
+	}
+	
+	public TurmaTO(TurmaPOJO turma) {
+		this.disciplina = new DisciplinaTO();
+		this.professor = new ProfessorTO();
+		this.codTurma = turma.getCodTurma();
+		this.getDisciplina().setCodigo(turma.getCodDisciplina());
+		this.professor.setMatricula(turma.getMatriculaProfessor());
 	}
 
 	public TurmaTO(DisciplinaTO disciplina, ProfessorTO professor, List<HorarioTO> horariosAulas, String codTurma) {
