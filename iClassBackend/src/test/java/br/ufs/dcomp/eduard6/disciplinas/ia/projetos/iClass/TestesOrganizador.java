@@ -1,8 +1,11 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iClass;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.OrganizadorIClass;
@@ -53,6 +56,8 @@ public class TestesOrganizador {
 
 		// Problema
 		ProblemaOrganizacaoTO problema = new ProblemaOrganizacaoTO();
+		problema.setDescricao("Problema de Teste "
+				+ new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date(System.currentTimeMillis())));
 		problema.setCargaHorariaGrade(6);
 		problema.setProfessores(professorTOs);
 		problema.setTurmasObrigatorias(turmasObrigatorias);

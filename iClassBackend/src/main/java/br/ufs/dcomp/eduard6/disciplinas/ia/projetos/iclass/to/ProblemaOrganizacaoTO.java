@@ -48,7 +48,7 @@ public class ProblemaOrganizacaoTO extends TransferObjectBase {
 	 */
 	private int cargaHorariaGrade;
 
-	public ProblemaOrganizacaoTO(List<ProfessorTO> professores, List<TurmaTO> turmasObrigatorias,
+	public ProblemaOrganizacaoTO(String descricao, List<ProfessorTO> professores, List<TurmaTO> turmasObrigatorias,
 			List<TurmaTO> turmasPredefinidas, TurnoGrade turnoGrade, int cargaHorariaGrade) {
 		super();
 
@@ -59,7 +59,7 @@ public class ProblemaOrganizacaoTO extends TransferObjectBase {
 						"Toda disciplina predefinida deve possuir seus horários/disciplinas pre-definidos.");
 			}
 		}
-
+		this.descricao = descricao;
 		this.professores = professores;
 		this.turmasObrigatorias = turmasObrigatorias;
 		this.turmasPredefinidas = turmasPredefinidas;
