@@ -1,6 +1,5 @@
 package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iClass;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
