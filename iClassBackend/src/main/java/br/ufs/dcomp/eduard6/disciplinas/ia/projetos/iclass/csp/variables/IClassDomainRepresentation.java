@@ -67,4 +67,15 @@ public class IClassDomainRepresentation {
 			return false;
 		return true;
 	}
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("IClassDomainRepresentation [horario=");
+        builder.append(horario != null ? horario.getCodigo() : null);
+        builder.append(", professor=");
+        builder.append(professor != null ? professor.getNome() : null);
+        builder.append("]");
+        return builder.toString();
+    }
 }

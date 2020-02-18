@@ -83,4 +83,20 @@ public class ResultadoOrganizacaoTO extends TransferObjectBase {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ResultadoOrganizacaoTO ["
+                + "descricao=");
+        builder.append(descricao);
+        builder.append(",\n solucao=");
+        builder.append(solucao);
+        builder.append(",\n melhoresSolucoesParciais=");
+        builder.append(melhoresSolucoesParciais);
+        builder.append(",\n metricas=");
+        builder.append(metricas);
+        builder.append("]");
+        return builder.toString();
+    }
 }

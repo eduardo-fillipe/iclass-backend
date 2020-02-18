@@ -19,134 +19,154 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVa
  * não. Essa função objetivo é CARA, ela deve verificar todas as turmas de
  * Assignment Completo para definir uma pontuação para o mesmo. Isso pode ser
  * apriomorado, se durante à busca sejam passadas para a função objetivo
- * informações que a própria busca já verificou, como quais restricoes o CSP viola.
+ * informações que a própria busca já verificou, como quais restricoes o CSP
+ * viola.
  * 
  * @author Eduardo Fillipe da Silva Reis
  *
  */
-public class CandidatosSolucaoListener implements CspListener<TurmaVariable, IClassDomainRepresentation> {
+public class CandidatosSolucaoListener
+        implements CspListener<TurmaVariable, IClassDomainRepresentation> {
 
-	private PriorityQueue<PontuacaoAssignment> candidatos;
-	private int quantCandidatos;
-	private static final float PONT_PROFESSOR_TURMA = 1F;
-	private static final float PONT_RESTRICAO = 5F;
+    private PriorityQueue<PontuacaoAssignment> candidatos;
 
-	public CandidatosSolucaoListener(int quantCandidatos) {
-		super();
-		this.candidatos = new PriorityQueue<>(
-				new PontuacaoAssignmentComparator());
-		this.quantCandidatos = quantCandidatos;
-	}
+    private int quantCandidatos;
 
-	@Override
-	public void stateChanged(CSP<TurmaVariable, IClassDomainRepresentation> csp,
-			Assignment<TurmaVariable, IClassDomainRepresentation> assignment, TurmaVariable variable) {
-		if (assignment != null && assignment.isComplete(csp.getVariables())) {
-			float pontuacao = getObjectiveFunctionValue(csp, assignment, variable);
-			if (pontuacao > candidatos.peek().getPontuacao()) {
-				candidatos.add(new PontuacaoAssignment(pontuacao, assignment));
-				if (candidatos.size() > quantCandidatos) {
-					candidatos.poll();
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Método que realiza o calculo da função objetivo de um Assignment.
-	 * 
-	 * @param csp
-	 * @param assignment
-	 * @param variable
-	 * @return
-	 */
-	private float getObjectiveFunctionValue(CSP<TurmaVariable, IClassDomainRepresentation> csp,
-			Assignment<TurmaVariable, IClassDomainRepresentation> assignment, TurmaVariable variable) {
-		float pont = 0;
-		for (TurmaVariable turma : csp.getVariables()) {
-			IClassDomainRepresentation value = assignment.getValue(turma);
+    private static final float PONT_PROFESSOR_TURMA = 1F;
 
-			if (value.getProfessor() != null) {
-				pont += PONT_PROFESSOR_TURMA;
-			} else {
-				pont -= PONT_PROFESSOR_TURMA;
-			}
+    private static final float PONT_RESTRICAO = 5F;
 
-			for (Constraint<TurmaVariable, IClassDomainRepresentation> restricao : csp.getConstraints()) {
-				if (!(restricao instanceof TurmaDevePossuirProfessor)) {
-					if (restricao.isSatisfiedWith(assignment)) {
-						pont += PONT_RESTRICAO;
-					} else {
-						pont -= PONT_RESTRICAO;
-					}
-				}
-			}
-		}
-		return pont;
-	}
+    public CandidatosSolucaoListener(int quantCandidatos) {
+        super();
+        this.candidatos = new PriorityQueue<>(
+                new PontuacaoAssignmentComparator());
+        this.quantCandidatos = quantCandidatos;
+    }
 
-	public PriorityQueue<PontuacaoAssignment> getCandidatos() {
-		return candidatos;
-	}
-	
-	/**
-	 * Abstração para tornar a ordenação dos Assignments mais simples.
-	 * 
-	 * @author Eduardo Fillipe da Silva Reis
-	 *
-	 */
-	public class PontuacaoAssignment {
-		private float pontuacao;
-		private Assignment<TurmaVariable, IClassDomainRepresentation> assignment;
+    @Override
+    public void stateChanged(CSP<TurmaVariable, IClassDomainRepresentation> csp,
+            Assignment<TurmaVariable, IClassDomainRepresentation> assignment,
+            TurmaVariable variable) {
+        if (assignment != null && assignment.isComplete(csp.getVariables())) {
+            float pontuacao = getObjectiveFunctionValue(csp, assignment,
+                    variable);
+            if (candidatos.peek() != null) {
+                if (pontuacao > candidatos.peek().getPontuacao()) {
+                    candidatos.add(
+                            new PontuacaoAssignment(pontuacao, assignment.clone()));
+                    if (candidatos.size() > quantCandidatos) {
+                        candidatos.poll();
+                    }
+                }
+            } else {
+                candidatos.add(
+                        new PontuacaoAssignment(pontuacao, assignment));
+            }
+        }
+    }
 
-		public PontuacaoAssignment() {
-			super();
-		}
+    /**
+     * Método que realiza o calculo da função objetivo de um Assignment.
+     * 
+     * @param csp
+     * @param assignment
+     * @param variable
+     * @return
+     */
+    private float getObjectiveFunctionValue(
+            CSP<TurmaVariable, IClassDomainRepresentation> csp,
+            Assignment<TurmaVariable, IClassDomainRepresentation> assignment,
+            TurmaVariable variable) {
+        float pont = 0;
+        for (TurmaVariable turma : csp.getVariables()) {
+            IClassDomainRepresentation value = assignment.getValue(turma);
 
-		public PontuacaoAssignment(float pontuacao, Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
-			super();
-			this.pontuacao = pontuacao;
-			this.assignment = assignment;
-		}
+            if (value.getProfessor() != null) {
+                pont += PONT_PROFESSOR_TURMA;
+            } else {
+                pont -= PONT_PROFESSOR_TURMA;
+            }
 
-		public float getPontuacao() {
-			return pontuacao;
-		}
+            for (Constraint<TurmaVariable, IClassDomainRepresentation> restricao : csp.getConstraints()) {
+                if (!(restricao instanceof TurmaDevePossuirProfessor)) {
+                    if (restricao.isSatisfiedWith(assignment)) {
+                        pont += PONT_RESTRICAO;
+                    } else {
+                        pont -= PONT_RESTRICAO;
+                    }
+                }
+            }
+        }
+        return pont;
+    }
 
-		public void setPontuacao(float pontuacao) {
-			this.pontuacao = pontuacao;
-		}
+    public PriorityQueue<PontuacaoAssignment> getCandidatos() {
+        return candidatos;
+    }
 
-		public Assignment<TurmaVariable, IClassDomainRepresentation> getAssignment() {
-			return assignment;
-		}
+    /**
+     * Abstração para tornar a ordenação dos Assignments mais simples.
+     * 
+     * @author Eduardo Fillipe da Silva Reis
+     *
+     */
+    public class PontuacaoAssignment {
+        private float pontuacao;
 
-		public void setAssignment(Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
-			this.assignment = assignment;
-		}
+        private Assignment<TurmaVariable, IClassDomainRepresentation> assignment;
 
-		@Override
-		public String toString() {
-			StringBuilder builder = new StringBuilder();
-			builder.append("PontuacaoAssignment [pontuacao=");
-			builder.append(pontuacao);
-			builder.append(", assignment=");
-			builder.append(assignment);
-			builder.append("]");
-			return builder.toString();
-		}
-	}
+        public PontuacaoAssignment() {
+            super();
+        }
 
-	/**
-	 * Comparator da Classe {@link CandidatosSolucaoListener.PontuacaoAssignment}.
-	 * 
-	 * @author Eduardo Fillipe da Silva Reis
-	 *
-	 */
-	private class PontuacaoAssignmentComparator implements Comparator<PontuacaoAssignment> {
-		@Override
-		public int compare(PontuacaoAssignment o1, PontuacaoAssignment o2) {
-			return Float.compare(o1.getPontuacao(), o2.getPontuacao());
-		}
-	}
+        public PontuacaoAssignment(float pontuacao,
+                Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
+            super();
+            this.pontuacao = pontuacao;
+            this.assignment = assignment;
+        }
+
+        public float getPontuacao() {
+            return pontuacao;
+        }
+
+        public void setPontuacao(float pontuacao) {
+            this.pontuacao = pontuacao;
+        }
+
+        public Assignment<TurmaVariable, IClassDomainRepresentation> getAssignment() {
+            return assignment;
+        }
+
+        public void setAssignment(
+                Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
+            this.assignment = assignment;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder builder = new StringBuilder();
+            builder.append("PontuacaoAssignment [pontuacao=");
+            builder.append(pontuacao);
+            builder.append(", assignment=");
+            builder.append(assignment);
+            builder.append("]");
+            return builder.toString();
+        }
+    }
+
+    /**
+     * Comparator da Classe
+     * {@link CandidatosSolucaoListener.PontuacaoAssignment}.
+     * 
+     * @author Eduardo Fillipe da Silva Reis
+     *
+     */
+    private class PontuacaoAssignmentComparator
+            implements Comparator<PontuacaoAssignment> {
+        @Override
+        public int compare(PontuacaoAssignment o1, PontuacaoAssignment o2) {
+            return Float.compare(o1.getPontuacao(), o2.getPontuacao());
+        }
+    }
 }
