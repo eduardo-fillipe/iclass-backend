@@ -31,7 +31,7 @@ public class CargaHorariaProfessor extends IClassRestricaoBase {
 		HashMap<ProfessorTO, Integer> professorCargaHoraria = new HashMap<>();
 		for (TurmaVariable turmaVariable : getScope()) {
 			IClassDomainRepresentation value = assignment.getValue(turmaVariable);
-			if (value != null) {
+			if (value != null && value.getProfessor() != null) {
 				Integer profCargaSum = professorCargaHoraria.get(value.getProfessor());
 
 				if (profCargaSum == null) {

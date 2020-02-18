@@ -35,7 +35,7 @@ public class PreferenciaProfessor extends IClassRestricaoBase {
 	public boolean isSatisfiedWith(Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
 		for (TurmaVariable turmaVariable : getScope()) { // Para cada turma no escopo
 			IClassDomainRepresentation value = assignment.getValue(turmaVariable); // Pegue o valor dela
-			if (value != null) { // Se ela já possui um valor
+			if (value != null && value.getProfessor() != null) { // Se ela já possui um valor
 				DisciplinaTO disciplinaDaTurma = turmaVariable.getTurmaAssociada().getDisciplina(); // Pegue a
 																									// disciplina dessa
 																									// turma
@@ -48,5 +48,4 @@ public class PreferenciaProfessor extends IClassRestricaoBase {
 		}
 		return true;
 	}
-
 }
