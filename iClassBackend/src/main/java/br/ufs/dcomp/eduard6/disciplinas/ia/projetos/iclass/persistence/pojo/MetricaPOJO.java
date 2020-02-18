@@ -10,60 +10,108 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.MetricaTO;
  *
  */
 public class MetricaPOJO {
-	private int quantidadeAtribuicoes;
-	private int quantidadeInferencias;
-	private CspSolverEnum algorithm;
-	private long timeToSolve;
+    private int quantidadeAtribuicoes;
 
-	public MetricaPOJO() {
+    private int quantidadeInferencias;
 
-	}
+    private CspSolverEnum algorithm;
 
-	public MetricaPOJO(MetricaTO metrica) {
-		this.quantidadeAtribuicoes = metrica.getQuantidadeAtribuicoes();
-		this.algorithm = metrica.getAlgorithm();
-		this.quantidadeInferencias = metrica.getQuantidadeInferencias();
-		this.timeToSolve = metrica.getTimeToSolve();
-	}
+    private long timeToSolve;
 
-	public MetricaPOJO(int quantidadeAtribuicoes, int quantidadeInferencias, CspSolverEnum algorithm,
-			long timeToSolve) {
-		super();
-		this.quantidadeAtribuicoes = quantidadeAtribuicoes;
-		this.quantidadeInferencias = quantidadeInferencias;
-		this.algorithm = algorithm;
-		this.timeToSolve = timeToSolve;
-	}
+    private boolean possuiSolucao;
 
-	public int getQuantidadeAtribuicoes() {
-		return quantidadeAtribuicoes;
-	}
+    private int tamanhoDominioTurmasObrigatorias;
 
-	public void setQuantidadeAtribuicoes(int quantidadeAtribuicoes) {
-		this.quantidadeAtribuicoes = quantidadeAtribuicoes;
-	}
+    private int quantProfessores;
 
-	public int getQuantidadeInferencias() {
-		return quantidadeInferencias;
-	}
+    private int quantTurmas;
 
-	public void setQuantidadeInferencias(int quantidadeInferencias) {
-		this.quantidadeInferencias = quantidadeInferencias;
-	}
+    public MetricaPOJO() {
 
-	public CspSolverEnum getAlgorithm() {
-		return algorithm;
-	}
+    }
 
-	public void setAlgorithm(CspSolverEnum algorithm) {
-		this.algorithm = algorithm;
-	}
+    public MetricaPOJO(MetricaTO metrica) {
+        this.quantidadeAtribuicoes = metrica.getQuantidadeAtribuicoes();
+        this.algorithm = metrica.getAlgorithm();
+        this.quantidadeInferencias = metrica.getQuantidadeInferencias();
+        this.timeToSolve = metrica.getTimeToSolve();
+        this.possuiSolucao = metrica.isPossuiSolucao();
+        this.tamanhoDominioTurmasObrigatorias = metrica.getTamanhoDominioTurmasObrigatorias();
+        this.quantProfessores = metrica.getQuantProfessores();
+        this.quantTurmas = metrica.getQuantTurmas();
+    }
 
-	public long getTimeToSolve() {
-		return timeToSolve;
-	}
+    public MetricaPOJO(int quantidadeAtribuicoes, int quantidadeInferencias,
+            CspSolverEnum algorithm, long timeToSolve) {
+        super();
+        this.quantidadeAtribuicoes = quantidadeAtribuicoes;
+        this.quantidadeInferencias = quantidadeInferencias;
+        this.algorithm = algorithm;
+        this.timeToSolve = timeToSolve;
+    }
 
-	public void setTimeToSolve(long timeToSolve) {
-		this.timeToSolve = timeToSolve;
-	}
+    public int getQuantidadeAtribuicoes() {
+        return quantidadeAtribuicoes;
+    }
+
+    public void setQuantidadeAtribuicoes(int quantidadeAtribuicoes) {
+        this.quantidadeAtribuicoes = quantidadeAtribuicoes;
+    }
+
+    public int getQuantidadeInferencias() {
+        return quantidadeInferencias;
+    }
+
+    public void setQuantidadeInferencias(int quantidadeInferencias) {
+        this.quantidadeInferencias = quantidadeInferencias;
+    }
+
+    public CspSolverEnum getAlgorithm() {
+        return algorithm;
+    }
+
+    public void setAlgorithm(CspSolverEnum algorithm) {
+        this.algorithm = algorithm;
+    }
+
+    public long getTimeToSolve() {
+        return timeToSolve;
+    }
+
+    public void setTimeToSolve(long timeToSolve) {
+        this.timeToSolve = timeToSolve;
+    }
+
+    public boolean isPossuiSolucao() {
+        return possuiSolucao;
+    }
+
+    public void setPossuiSolucao(boolean possuiSolucao) {
+        this.possuiSolucao = possuiSolucao;
+    }
+
+    public int getTamanhoDominioTurmasObrigatorias() {
+        return tamanhoDominioTurmasObrigatorias;
+    }
+
+    public void setTamanhoDominioTurmasObrigatorias(
+            int tamanhoDominioTurmasObrigatorias) {
+        this.tamanhoDominioTurmasObrigatorias = tamanhoDominioTurmasObrigatorias;
+    }
+
+    public int getQuantProfessores() {
+        return quantProfessores;
+    }
+
+    public void setQuantProfessores(int quantProfessores) {
+        this.quantProfessores = quantProfessores;
+    }
+
+    public int getQuantTurmas() {
+        return quantTurmas;
+    }
+
+    public void setQuantTurmas(int quantTurmas) {
+        this.quantTurmas = quantTurmas;
+    }
 }

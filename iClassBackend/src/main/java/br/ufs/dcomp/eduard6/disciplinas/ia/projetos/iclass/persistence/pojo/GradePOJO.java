@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.GradeTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
+
 /**
  * Representa uma Grade no banco de dados.
  * 
@@ -14,25 +15,23 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
  *
  */
 public class GradePOJO {
-	private String descricao;
 	private ObjectId _id;
 	private List<HorarioPOJO> horarios;
-	private MetricaPOJO metricas;
 
-	public GradePOJO(String descricao, List<HorarioPOJO> horarios, MetricaPOJO metricas) {
+	public GradePOJO(List<HorarioPOJO> horarios) {
 		super();
-		this.descricao = descricao;
 		this.horarios = horarios;
-		this.metricas = metricas;
 	}
 
 	public GradePOJO(GradeTO grade) {
-		this.metricas = new MetricaPOJO(grade.getMetricas());
-		this.horarios = new ArrayList<HorarioPOJO>(grade.getHorarios().size());
-		this.descricao = grade.getDescricao();
+		this.horarios = new ArrayList<>(grade.getHorarios().size());
 		for (HorarioTO horarioTO : grade.getHorarios()) {
 			this.horarios.add(new HorarioPOJO(horarioTO));
 		}
+	}
+	
+	public GradePOJO() {
+	    
 	}
 
 	public List<HorarioPOJO> getHorarios() {
@@ -43,27 +42,11 @@ public class GradePOJO {
 		this.horarios = horarios;
 	}
 
-	public MetricaPOJO getMetricas() {
-		return metricas;
-	}
-
-	public void setMetricas(MetricaPOJO metricas) {
-		this.metricas = metricas;
-	}
-
 	public ObjectId get_id() {
 		return _id;
 	}
 
 	public void set_id(ObjectId _id) {
 		this._id = _id;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 }

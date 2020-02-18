@@ -6,6 +6,7 @@ import aima.core.search.csp.Assignment;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.IClassCSP;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.GradePOJO;
 
 /**
  * Classe que representa da Grade como TO.
@@ -15,20 +16,21 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVa
  */
 public class GradeTO extends TransferObjectBase{
 	
-	private String descricao;
 	private List<HorarioTO> horarios;
 	private IClassCSP csp;
 	private Assignment<TurmaVariable, IClassDomainRepresentation> assignment;
-	private MetricaTO metricas;
 	
-	public GradeTO(Assignment<TurmaVariable, IClassDomainRepresentation> assignment, IClassCSP csp, MetricaTO metricas) {
+	public GradeTO(Assignment<TurmaVariable, IClassDomainRepresentation> assignment, IClassCSP csp) {
 		super();
 		this.assignment = assignment;
 		this.csp = csp;
-		this.metricas = metricas;
 	}
+	
+	public GradeTO(GradePOJO gradePojo) {
+        super();
+    }
 
-	public List<HorarioTO> getHorarios() {
+    public List<HorarioTO> getHorarios() {
 		return horarios;
 	}
 
@@ -50,22 +52,6 @@ public class GradeTO extends TransferObjectBase{
 
 	public void setAssignment(Assignment<TurmaVariable, IClassDomainRepresentation> assignment) {
 		this.assignment = assignment;
-	}
-
-	public MetricaTO getMetricas() {
-		return metricas;
-	}
-
-	public void setMetricas(MetricaTO metricas) {
-		this.metricas = metricas;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 
 	@Override

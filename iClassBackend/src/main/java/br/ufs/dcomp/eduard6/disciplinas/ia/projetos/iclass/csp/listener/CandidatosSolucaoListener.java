@@ -33,7 +33,7 @@ public class CandidatosSolucaoListener implements CspListener<TurmaVariable, ICl
 
 	public CandidatosSolucaoListener(int quantCandidatos) {
 		super();
-		this.candidatos = new PriorityQueue<CandidatosSolucaoListener.PontuacaoAssignment>(
+		this.candidatos = new PriorityQueue<>(
 				new PontuacaoAssignmentComparator());
 		this.quantCandidatos = quantCandidatos;
 	}

@@ -6,8 +6,8 @@ import aima.core.search.csp.MinConflictsSolver;
 import aima.core.search.csp.TreeCspSolver;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
-import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.GradeTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProblemaOrganizacaoTO;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ResultadoOrganizacaoTO;
 
 /**
  * Interface Responsável pela interação com o frontEnd da aplicação.
@@ -26,7 +26,7 @@ public abstract class OganizadorIClassBase {
 		solver = getSolverFromEnum();
 	}
 
-	public abstract GradeTO organize();
+	public abstract ResultadoOrganizacaoTO organize();
 
 	/**
 	 * Enum responsável por definir qual será o algoritmo utilizado pelo
@@ -55,13 +55,13 @@ public abstract class OganizadorIClassBase {
 	private CspSolver<TurmaVariable, IClassDomainRepresentation> getSolverFromEnum() {
 		switch (solverAlgorithm) {
 			case MIN_CONFLICTS:
-				return new MinConflictsSolver<TurmaVariable, IClassDomainRepresentation>(10000);
+				return new MinConflictsSolver<>(10000);
 			case BACKTRACKING:
-				return new FlexibleBacktrackingSolver<TurmaVariable, IClassDomainRepresentation>();
+				return new FlexibleBacktrackingSolver<>();
 			case BACKTRACKING_WITH_HEURISTCS:
 				return new FlexibleBacktrackingSolver<TurmaVariable, IClassDomainRepresentation>().setAll();
 			case TREE:
-				return new TreeCspSolver<TurmaVariable, IClassDomainRepresentation>();
+				return new TreeCspSolver<>();
 			default:
 				return new FlexibleBacktrackingSolver<TurmaVariable, IClassDomainRepresentation>().setAll();
 		}
