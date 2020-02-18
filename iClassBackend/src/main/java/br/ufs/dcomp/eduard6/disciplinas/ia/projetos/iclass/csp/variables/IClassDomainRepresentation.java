@@ -19,7 +19,10 @@ public class IClassDomainRepresentation {
 		super();
 		this.horario = horario;
 		this.professor = professor;
-		this.uniqueCod = horario.getCodigo() + "." + professor.getMatricula();
+		if (professor != null)
+			this.uniqueCod = horario.getCodigo() + "." + professor.getMatricula();
+		else
+			this.uniqueCod = horario.getCodigo() + "." + "null";
 	}
 
 	public HorarioTO getHorario() {

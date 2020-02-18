@@ -15,12 +15,12 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVa
  * @author Eduardo Fillipe da Silva Reis
  *
  */
-public class DisciplinaDevePossuirProfessor extends IClassRestricaoBase {
+public class TurmaDevePossuirProfessor extends IClassRestricaoBase {
 
 	private TurmaVariable turma;
 	private ArrayList<TurmaVariable> scope;
 	
-	public DisciplinaDevePossuirProfessor(IClassCSP iClassCSP, TurmaVariable turma) {
+	public TurmaDevePossuirProfessor(IClassCSP iClassCSP, TurmaVariable turma) {
 		super(iClassCSP);
 		this.turma = turma;
 		scope = new ArrayList<>(Arrays.asList(this.turma));

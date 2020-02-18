@@ -56,7 +56,7 @@ public class ProfessorResponsavelAulasTurma extends IClassRestricaoBase {
 		for (int i = primeiroNaoNull + 1; i < getScope().size(); i++) {
 			IClassDomainRepresentation v = assignment.getValue(getScope().get(i));
 			if (v != null) {
-				if (!v.getProfessor().equals(temp.getProfessor())) {
+				if (!temp.getProfessor().equals(v.getProfessor())) {
 					return false;
 				}
 			}

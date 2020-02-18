@@ -63,7 +63,7 @@ public class TestesOrganizador {
 		problema.setTurmasPredefinida(turmasPredef);
 		problema.setTurnoGrade(TurnoGrade.TARDE);
 
-		OganizadorIClassBase organizador = new OrganizadorIClass(problema, CspSolverEnum.BACKTRACKING_WITH_HEURISTCS);
+		OganizadorIClassBase organizador = new OrganizadorIClass(problema, CspSolverEnum.MIN_CONFLICTS, true);
 		GradeTO grade = organizador.organize();
 		System.out.println(grade);
 		if (grade != null) {
