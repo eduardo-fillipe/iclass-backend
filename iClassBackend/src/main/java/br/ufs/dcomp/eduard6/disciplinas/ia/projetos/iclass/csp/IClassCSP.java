@@ -296,10 +296,19 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 			throw new IllegalArgumentException("A lista de Turmas Obrigatórias precisa ser fornecida.");
 		if (problema.getTurmasPredefinidas() == null)
 			throw new IllegalArgumentException("A lista de Turmas Predefinidas precisa ser fornecida.");
-
+		
+		for (ProfessorTO professor : problema.getProfessores()) {
+			if (professor.getPreferencias() == null) {
+				if (professor.getPreferencias().size() >= 3 && professor.getPreferencias().size() <= 6) {
+					continue;
+				}
+				throw new IllegalArgumentException("A quantidade de preferências do professor é menor que 3 ou maior que 6: " + professor);
+			}
+		}
+		
 		if (problema.getCargaHorariaGrade() < MIN_DOMAIN_PROBLEM_SIZE)
 			throw new IllegalArgumentException("A carga horária diária da grade deve ser >= 2.");
-
+		
 		int sum = 0;
 
 		for (TurmaTO turma : problema.getTurmasObrigatorias()) {
