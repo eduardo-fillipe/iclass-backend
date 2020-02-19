@@ -26,6 +26,12 @@ public abstract class OganizadorIClassBase {
 		solver = getSolverFromEnum();
 	}
 
+	/**
+	 * Método que tenta resolver o Problema de Organização dessa Classe.
+	 * 
+	 * @return Resultado da Organização devidamente preenchido.
+	 * @see ResultadoOrganizacaoTO
+	 */
 	public abstract ResultadoOrganizacaoTO organize();
 
 	/**

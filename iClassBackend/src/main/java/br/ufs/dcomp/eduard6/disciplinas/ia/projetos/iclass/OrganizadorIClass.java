@@ -48,7 +48,7 @@ public class OrganizadorIClass extends OganizadorIClassBase {
 
     /**
      * Dado um problema, instancia um Organizador iClass Default, utilizando o
-     * algoritmo {@link CspSolverEnum#MIN_CONFLICTS} e sem fazer uso da coleta
+     * algoritmo {@link OrganizadorIClassBase.CspSolverEnum#MIN_CONFLICTS} e sem fazer uso da coleta
      * de resultados parciais.
      * 
      * @param problema

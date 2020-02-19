@@ -3,6 +3,16 @@ package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
 
+/**
+ * Representa o valor de uma variável no iClassCSP.
+ * <br>
+ * Cada variável pode possui um {@link HorarioTO} e um {@link ProfessorTO}
+ * associado. O professor dessa classe pode ser nulo, indicando que essa turma,
+ * apesar de possuir um horario, não possui professor.
+ * 
+ * @author Eduardo Fillipe da Silva Reis
+ *
+ */
 public class IClassDomainRepresentation {
 	private HorarioTO horario;
 	private ProfessorTO professor;
@@ -14,7 +24,7 @@ public class IClassDomainRepresentation {
 		this.professor = professor;
 		this.uniqueCod = uniqueCod;
 	}
-	
+
 	public IClassDomainRepresentation(HorarioTO horario, ProfessorTO professor) {
 		super();
 		this.horario = horario;
@@ -68,14 +78,14 @@ public class IClassDomainRepresentation {
 		return true;
 	}
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("IClassDomainRepresentation [horario=");
-        builder.append(horario != null ? horario.getCodigo() : null);
-        builder.append(", professor=");
-        builder.append(professor != null ? professor.getNome() : null);
-        builder.append("]");
-        return builder.toString();
-    }
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("IClassDomainRepresentation [horario=");
+		builder.append(horario != null ? horario.getCodigo() : null);
+		builder.append(", professor=");
+		builder.append(professor != null ? professor.getNome() : null);
+		builder.append("]");
+		return builder.toString();
+	}
 }

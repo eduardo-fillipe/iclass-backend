@@ -10,7 +10,7 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.Resu
 /**
  * Classe que representa o Resultado de um problema de organização como TO.
  * 
- * @author fillipe
+ * @author Eduardo Fillipe da Silva Reis
  */
 public class ResultadoOrganizacaoTO extends TransferObjectBase {
     private String descricao;

@@ -7,6 +7,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
 /**
+ * Representa um Professor no banco de dados.
  * 
  * @author Eduardo Fillipe da Silva Reis
  *

@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
 /**
+ * Representa um Professor (Completo, com informações de outras tabelas) no Banco de Dados.
  * 
  * @author Eduardo Fillipe da Silva Reis
  *
