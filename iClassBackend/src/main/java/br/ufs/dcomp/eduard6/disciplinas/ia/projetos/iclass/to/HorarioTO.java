@@ -43,8 +43,8 @@ public class HorarioTO extends TransferObjectBase implements Comparable<HorarioT
 			return valor;
 		}
 	}
-	
-	public HorarioTO (HorarioTO horario) {
+
+	public HorarioTO(HorarioTO horario) {
 		this.codigo = horario.getCodigo();
 		this.dia = horario.getDia();
 		this.horarioSequencia = horario.getHorarioSequencia();
@@ -106,26 +106,26 @@ public class HorarioTO extends TransferObjectBase implements Comparable<HorarioT
 	}
 
 	/**
-	 * Verifica se uma dada sequencia de horários é consecutiva.
-	 * O(nlog(n))
+	 * Verifica se uma dada sequencia de horários é consecutiva. O(nlog(n))
+	 * 
 	 * @param horarios
 	 * @return
 	 */
 	public static boolean isConsecutivos(List<HorarioTO> horarios) {
 		ArrayList<List<HorarioTO>> dias = new ArrayList<List<HorarioTO>>();
-		for (int i = 1; i <= DayOfWeek.FRIDAY.getValue(); i++) //O(5)
+		for (int i = 1; i <= DayOfWeek.FRIDAY.getValue(); i++) // O(5)
 			dias.add(new ArrayList<HorarioTO>());
-		
-		for (HorarioTO horario : horarios) { //O(n)
+
+		for (HorarioTO horario : horarios) { // O(n)
 			if (horario != null)
 				dias.get(horario.getDia().getValue() - 1).add(horario);
 		}
-		
-		for (List<HorarioTO> dia : dias) { //O(n)
+
+		for (List<HorarioTO> dia : dias) { // O(n)
 			if (dia.size() > 1) {
-				Collections.sort(dia); //O(log(n))
+				Collections.sort(dia); // O(log(n))
 				for (int i = 0; i < dia.size() - 1; i++) {
-					if (dia.get(i).numeroHorario + 2 != dia.get(i + 1).numeroHorario) 
+					if (dia.get(i).numeroHorario + 2 != dia.get(i + 1).numeroHorario)
 						return false;
 				}
 			}

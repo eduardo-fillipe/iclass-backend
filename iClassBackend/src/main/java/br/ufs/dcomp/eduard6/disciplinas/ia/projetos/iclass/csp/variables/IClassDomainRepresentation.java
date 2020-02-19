@@ -53,6 +53,7 @@ public class IClassDomainRepresentation {
 		int result = 1;
 		result = prime * result + ((horario == null) ? 0 : horario.hashCode());
 		result = prime * result + ((professor == null) ? 0 : professor.hashCode());
+		result = prime * result + ((uniqueCod == null) ? 0 : uniqueCod.hashCode());
 		return result;
 	}
 
@@ -75,6 +76,11 @@ public class IClassDomainRepresentation {
 				return false;
 		} else if (!professor.equals(other.professor))
 			return false;
+		if (uniqueCod == null) {
+			if (other.uniqueCod != null)
+				return false;
+		} else if (!uniqueCod.equals(other.uniqueCod))
+			return false;
 		return true;
 	}
 
@@ -88,4 +94,6 @@ public class IClassDomainRepresentation {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 }

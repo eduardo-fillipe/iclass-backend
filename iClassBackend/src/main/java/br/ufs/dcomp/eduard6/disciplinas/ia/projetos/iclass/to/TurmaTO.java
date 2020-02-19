@@ -20,7 +20,7 @@ public class TurmaTO extends TransferObjectBase {
 	public TurmaTO() {
 		super();
 	}
-	
+
 	public TurmaTO(TurmaPOJO turma) {
 		this.disciplina = new DisciplinaTO();
 		this.professor = new ProfessorTO();
@@ -35,12 +35,12 @@ public class TurmaTO extends TransferObjectBase {
 		this.professor = professor;
 
 		this.horariosAulas = new LinkedHashMap<String, HorarioTO>();
-		
+
 		if (horariosAulas != null) {
 			for (HorarioTO horario : horariosAulas)
 				this.horariosAulas.put(horario.getCodigo(), horario);
 		}
-		
+
 		this.codTurma = codTurma;
 	}
 
@@ -145,7 +145,6 @@ public class TurmaTO extends TransferObjectBase {
 
 	@Override
 	public String toString() {
-		return "TurmaTO [disciplina=" + disciplina.getNome() + ", professor=" + professor.getNome() + ", horariosAulas=" + horariosAulas.size()
-				+ ", codTurma=" + codTurma + "]";
+		return "TurmaTO [disciplina=" + disciplina.getNome() + ", professor=" + (professor != null ? professor.getNome() : null) + ", horariosAulas=" + horariosAulas.size() + ", codTurma=" + codTurma + "]";
 	}
 }

@@ -13,7 +13,7 @@ public class TurmaPOJO {
 	private String codTurma;
 
 	public TurmaPOJO(TurmaTO turma) {
-		this.matriculaProfessor = turma.getProfessor().getMatricula();
+		this.matriculaProfessor = turma.getProfessor() != null ? turma.getProfessor().getMatricula() : null;
 		this.codDisciplina = turma.getDisciplina().getCodigo();
 		this.codTurma = turma.getCodTurma();
 	}

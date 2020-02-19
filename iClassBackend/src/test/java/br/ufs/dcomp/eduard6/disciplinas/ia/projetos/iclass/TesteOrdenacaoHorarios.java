@@ -1,4 +1,4 @@
-package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iClass;
+package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;

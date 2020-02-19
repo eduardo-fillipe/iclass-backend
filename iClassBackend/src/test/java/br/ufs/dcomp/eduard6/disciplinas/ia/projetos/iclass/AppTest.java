@@ -1,4 +1,4 @@
-package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iClass;
+package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
