@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.OrganizadorIClass;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.OganizadorIClassBase;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.OganizadorIClassBase.CspSolverEnum;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.dao.mongodb.DisciplinaDAO;
@@ -28,6 +27,7 @@ public class TestesOrganizador {
 		List<ProfessorTO> professorTOs = ProfessorDAO.getInstance().getProfessores();
 		ProfessorTO estombelo = ProfessorDAO.getInstance().getProfessorCompleto("1");
 		ProfessorTO breno = ProfessorDAO.getInstance().getProfessorCompleto("2");
+
 
 		// Disciplinas
 		DisciplinaTO compiladores = (DisciplinaDAO.getInstance().getDisciplina("CP001"));
@@ -58,14 +58,14 @@ public class TestesOrganizador {
 
 		List<TurmaTO> turmasPredef = new ArrayList<>(Arrays.asList(turmaEd, turmaCp));
 		List<TurmaTO> turmasObrigatorias = new ArrayList<>(
-				Arrays.asList(turmaIA, turmaPI, turmaGrafos));
+				Arrays.asList(turmaGrafos));
 
 		// Problema
 		ProblemaOrganizacaoTO problema = new ProblemaOrganizacaoTO();
 		problema.setDescricao("Problema de Teste "
 				+ new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date(System.currentTimeMillis())));
 		problema.setCargaHorariaGrade(4);
-		problema.setProfessores(professorTOs);
+		problema.setProfessores(new ArrayList<>(Arrays.asList(estombelo, breno)));
 		problema.setTurmasObrigatorias(turmasObrigatorias);
 		problema.setTurmasPredefinida(turmasPredef);
 		problema.setTurnoGrade(TurnoGrade.NOITE);

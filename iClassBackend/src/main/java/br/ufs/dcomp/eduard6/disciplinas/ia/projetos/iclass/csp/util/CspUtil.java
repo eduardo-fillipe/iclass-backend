@@ -13,7 +13,7 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVa
 public class CspUtil {
 	
 	/**
-	 * Verifica se dois assignments são iguais.
+	 * Verifica se dois assignments completos são iguais.
 	 * 
 	 * @param assignment
 	 * @param assignment2
@@ -21,7 +21,7 @@ public class CspUtil {
 	 */
 	public static boolean areEquals(Assignment<TurmaVariable, IClassDomainRepresentation> assignment, Assignment<TurmaVariable, IClassDomainRepresentation> assignment2) {
 		for (TurmaVariable v : assignment.getVariables()) {
-			if (assignment.getValue(v).equals(assignment2.getValue(v))) {
+			if (!assignment.getValue(v).equals(assignment2.getValue(v))) {
 				return false;
 			}
 		}
