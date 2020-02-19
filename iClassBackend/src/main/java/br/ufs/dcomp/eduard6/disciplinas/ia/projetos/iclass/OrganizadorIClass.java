@@ -76,10 +76,6 @@ public class OrganizadorIClass extends OganizadorIClassBase {
                 csp);
         long endTime = System.currentTimeMillis();
 
-        candidatosListener.getCandidatos().forEach(c -> {
-            System.out.println(c);
-        });
-
         ResultadoOrganizacaoTO resultadoOrganizacao = new ResultadoOrganizacaoTO();
         resultadoOrganizacao.setDescricao(csp.getProblema().getDescricao());
 
@@ -91,7 +87,7 @@ public class OrganizadorIClass extends OganizadorIClassBase {
         metrica.setQuantidadeInferencias(
                 stepCounter.getResults().getInt("inferenceCount"));
         metrica.setPossuiSolucao(result.isPresent());
-        metrica.setQuantTurmas(csp.getTurmasObrigatorias().size());
+        metrica.setQuantTurmas(csp.getTurmasObrigatorias().size() + csp.getTurmasPredefinidas().size());
         metrica.setQuantProfessores(csp.getProfessores().size());
         metrica.setTamanhoDominioTurmasObrigatorias(csp.getHorarios().size());
         resultadoOrganizacao.setMetricas(metrica);

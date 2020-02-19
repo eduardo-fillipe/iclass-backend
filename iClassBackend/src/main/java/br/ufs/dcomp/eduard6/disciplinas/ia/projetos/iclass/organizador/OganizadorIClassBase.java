@@ -3,7 +3,6 @@ package br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador;
 import aima.core.search.csp.CspSolver;
 import aima.core.search.csp.FlexibleBacktrackingSolver;
 import aima.core.search.csp.MinConflictsSolver;
-import aima.core.search.csp.TreeCspSolver;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProblemaOrganizacaoTO;
@@ -44,7 +43,7 @@ public abstract class OganizadorIClassBase {
 	public enum CspSolverEnum {
 
 		MIN_CONFLICTS("Min Conflicts Solver"), BACKTRACKING("Backtracking Solver"),
-		BACKTRACKING_WITH_HEURISTCS("Backtracking with Heuristics Solver"), TREE("Tree Solver");
+		BACKTRACKING_WITH_HEURISTCS("Backtracking with Heuristics Solver");
 
 		String solverClassName;
 
@@ -66,8 +65,6 @@ public abstract class OganizadorIClassBase {
 				return new FlexibleBacktrackingSolver<>();
 			case BACKTRACKING_WITH_HEURISTCS:
 				return new FlexibleBacktrackingSolver<TurmaVariable, IClassDomainRepresentation>().setAll();
-			case TREE:
-				return new TreeCspSolver<>();
 			default:
 				return new FlexibleBacktrackingSolver<TurmaVariable, IClassDomainRepresentation>().setAll();
 		}

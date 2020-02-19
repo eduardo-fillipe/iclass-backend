@@ -23,8 +23,8 @@ public class TesteOrdenacaoHorarios {
 		arrayList.add(horarioCP1);
 		arrayList.add(horarioCP2);
 		
-		//System.out.println(HorarioTO.isConsecutivos(new ArrayList<HorarioTO>(Arrays.asList(horarioED3_cpy, horarioED3))));
-		//System.out.println(horarioED3.equals(horarioED3_cpy));
+		System.out.println(HorarioTO.isConsecutivos(new ArrayList<HorarioTO>(Arrays.asList(horarioED3_cpy, horarioED3))));
+		System.out.println(horarioED3.equals(horarioED3_cpy));
 		float a = 2960.0f;
 	      float b = 2960.0f;
 

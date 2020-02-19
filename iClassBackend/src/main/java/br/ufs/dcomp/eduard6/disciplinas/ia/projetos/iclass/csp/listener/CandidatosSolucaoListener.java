@@ -69,7 +69,7 @@ public class CandidatosSolucaoListener implements CspListener<TurmaVariable, ICl
 	 * @param csp
 	 * @param assignment
 	 * @param variable
-	 * @return
+	 * @return Uma pontuação que determina o quão boa é uma determinada grade. Quão maior o valor, melhor a grade.
 	 */
 	private float getObjectiveFunctionValue(CSP<TurmaVariable, IClassDomainRepresentation> csp,
 			Assignment<TurmaVariable, IClassDomainRepresentation> assignment, TurmaVariable variable) {

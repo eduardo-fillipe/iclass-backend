@@ -87,7 +87,7 @@ public class ResultadoOrganizacaoTO extends TransferObjectBase {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("ResultadoOrganizacaoTO ["
+        builder.append("ResultadoOrganizacaoTO [\n"
                 + "descricao=");
         builder.append(descricao);
         builder.append(",\n solucao=");
