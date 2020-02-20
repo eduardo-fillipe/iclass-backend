@@ -28,7 +28,7 @@ public class PreferenciaProfessor extends IClassRestricaoBase {
 
 	@Override
 	public List<TurmaVariable> getScope() {
-		return new ArrayList<TurmaVariable>(Arrays.asList(turma));
+		return new ArrayList<>(Arrays.asList(turma));
 	}
 
 	@Override

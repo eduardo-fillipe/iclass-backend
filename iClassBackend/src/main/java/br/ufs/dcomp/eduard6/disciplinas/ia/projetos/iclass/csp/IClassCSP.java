@@ -16,6 +16,7 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVa
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.ApenasAulasConsecutivasNoDia;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.AulasParalelas;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.CargaHorariaProfessor;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.PreferenciaHorariosProfessor;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.TurmaDevePossuirProfessor;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.PreferenciaProfessor;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.ProfessorResponsavelAulasTurma;
@@ -177,7 +178,7 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 				setDomain(turmaVariable, dominioTurmasObrigatorias);
 				addConstraint(new PreferenciaProfessor(this, turmaVariable));
 				addConstraint(new TurmaDevePossuirProfessor(this, turmaVariable));
-
+				addConstraint(new PreferenciaHorariosProfessor(this, turmaVariable));
 			}
 
 			this.fragmentosTurma.put(turma, turmasVariableTurma); // Adiciona um índice de variaveis que essa turma
