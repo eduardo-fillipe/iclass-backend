@@ -23,6 +23,7 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.Prof
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.ProfessorPOJO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.DisciplinaTO;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
 
 /**
  * Classe responsável pelas interações relacionadas a professores com o banco de
@@ -50,7 +51,7 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 	 * @param professor
 	 */
 	public void alterarProfessor(ProfessorTO professor) {
-
+		throw new UnsupportedOperationException("Não implementado ainda");
 	}
 
 	/**
@@ -71,45 +72,35 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 		p.setMatricula(pp.getMatricula());
 		p.setCargaHorariaSemanal(pp.getCargaHorariaSemanal());
 		p.setPreferencias(new ArrayList<DisciplinaTO>());
+		p.setPreferenciaHorarios(new ArrayList<HorarioTO>());
+		
 		for (String pr : pp.getPreferencias()) {
 			DisciplinaTO d = new DisciplinaTO();
 			d.setCodigo(pr);
 			p.getPreferencias().add(d);
+		}
+		
+		if (pp.getPreferenciaHorarios() != null) {
+			pp.getPreferenciaHorarios().forEach(h -> {
+				p.getPreferenciaHorarios().add(new HorarioTO(h));
+			});
 		}
 
 		return p;
 	}
 
 	public ProfessorTO getProfessorCompleto(String matricula) {
-		Document doc = getDatabase()
+		ProfessorCompletoPOJO doc = getDatabase()
 				.getCollection(
-						MongoDBConnectionManager.getInstance().getPropertie("iclass.mongodb.collectionname.professor"))
+						MongoDBConnectionManager.getInstance().getPropertie("iclass.mongodb.collectionname.professor"), ProfessorCompletoPOJO.class)
 				.aggregate(Arrays.asList(match(eq("matricula", matricula)), limit(1), unwind("$preferencias"),
 						lookup("disciplina", "preferencias", "codigo", "preferencias"), unwind("$preferencias"),
 						group("$_id", first("matricula", "$matricula"), first("nome", "$nome"),
 								first("cargaHorariaSemanal", "$cargaHorariaSemanal"),
-								push("preferencias", "$preferencias"))))
+								push("preferencias", "$preferencias"), push("preferenciaHorarios", "$preferenciaHorarios"))))
 				.first();
 
-		ProfessorTO professorTO = new ProfessorTO();
-
-		professorTO.setNome(doc.getString("nome"));
-		professorTO.setMatricula(doc.getString("matricula"));
-		professorTO.setCargaHorariaSemanal(doc.get("cargaHorariaSemanal", Integer.class).shortValue());
-		professorTO.setPreferencias(new ArrayList<DisciplinaTO>());
-
-		@SuppressWarnings("unchecked")
-		ArrayList<Document> preferencias = doc.get("preferencias", ArrayList.class);
-
-		if (preferencias != null) {
-			preferencias.forEach(disciplinaDoc -> {
-				DisciplinaTO d = new DisciplinaTO();
-				d.setCargaHoraria(disciplinaDoc.get("cargaHoraria", Integer.class).shortValue());
-				d.setCodigo(disciplinaDoc.getString("codigo"));
-				d.setNome(disciplinaDoc.getString("nome"));
-				professorTO.getPreferencias().add(d);
-			});
-		}
+		ProfessorTO professorTO = new ProfessorTO(doc);
 
 		return professorTO;
 	}
@@ -125,7 +116,7 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 				.aggregate(Arrays.asList(unwind("$preferencias"),
 						lookup("disciplina", "preferencias", "codigo", "preferencias"), unwind("$preferencias"),
 						group("$_id", first("nome", "$nome"), first("cargaHorariaSemanal", "$cargaHorariaSemanal"),
-								first("matricula", "$matricula"), push("preferencias", "$preferencias"))))
+								first("matricula", "$matricula"), push("preferencias", "$preferencias"), push("preferenciaHorarios", "$preferenciaHorarios"))))
 				.iterator()
 				.forEachRemaining(professorCompleto -> {
 					p.add(new ProfessorTO(professorCompleto));

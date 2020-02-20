@@ -15,12 +15,14 @@ public class ProfessorCompletoPOJO {
 	private String matricula;
 	private List<DisciplinaPOJO> preferencias;
 	private short cargaHorariaSemanal;
+	private List<HorarioPOJO> preferenciaHorarios;
 	
-	public ProfessorCompletoPOJO(String nome, String matricula, List<DisciplinaPOJO> preferencias, short cargaHorariaSemanal) {
+	public ProfessorCompletoPOJO(String nome, String matricula, List<DisciplinaPOJO> preferencias, short cargaHorariaSemanal, List<HorarioPOJO> preferenciaHorarios) {
 		this.nome = nome;
 		this.matricula = matricula;
 		this.preferencias = preferencias;
 		this.cargaHorariaSemanal = cargaHorariaSemanal;
+		this.preferenciaHorarios = preferenciaHorarios;
 	}
 	
 	public ProfessorCompletoPOJO() {
@@ -31,7 +33,13 @@ public class ProfessorCompletoPOJO {
 		ProfessorCompletoPOJO p = new ProfessorCompletoPOJO(professor.getNome(),
 				professor.getMatricula(),
 				new ArrayList<DisciplinaPOJO>(professor.getPreferencias().size()),
-				professor.getCargaHorariaSemanal());
+				professor.getCargaHorariaSemanal(), new ArrayList<HorarioPOJO>());
+		
+		if (professor.getPreferenciaHorarios() != null) {
+			professor.getPreferenciaHorarios().forEach(h -> {
+				p.getPreferenciaHorarios().add(new HorarioPOJO());
+			});
+		}
 		
 		professor.getPreferencias().forEach(o -> {
 			p.getPreferencias().add(new DisciplinaPOJO(o));
@@ -70,5 +78,13 @@ public class ProfessorCompletoPOJO {
 
 	public void setCargaHorariaSemanal(short cargaHorariaSemanal) {
 		this.cargaHorariaSemanal = cargaHorariaSemanal;
+	}
+
+	public List<HorarioPOJO> getPreferenciaHorarios() {
+		return preferenciaHorarios;
+	}
+
+	public void setPreferenciaHorarios(List<HorarioPOJO> preferenciaHorarios) {
+		this.preferenciaHorarios = preferenciaHorarios;
 	}
 }

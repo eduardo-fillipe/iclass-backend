@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.persistence.pojo.HorarioPOJO;
+
 /**
  * Classe que representa o Horario como TO.
  * 
@@ -41,6 +43,18 @@ public class HorarioTO extends TransferObjectBase implements Comparable<HorarioT
 
 		public short getValor() {
 			return valor;
+		}
+		
+		public static HorarioSequencia fromValue(int seq) {
+			switch (seq) {
+			case 2:
+				return DOIS;
+
+			case 4:
+				return QUATRO;
+			default:
+				return null;
+			}
 		}
 	}
 
@@ -140,6 +154,16 @@ public class HorarioTO extends TransferObjectBase implements Comparable<HorarioT
 	 */
 	private static boolean isCodigoValido(String codigo) {
 		return true;
+	}
+	
+	public HorarioTO(HorarioPOJO horarioPOJO) { 
+		this.codigo = horarioPOJO.getCodigo();
+		char cDia = horarioPOJO.getCodigo().charAt(0);
+		int iDia = Integer.valueOf((String.valueOf(cDia)));
+		this.dia = DayOfWeek.of(iDia - 1);
+		this.horarioSequencia = HorarioSequencia.fromValue(horarioPOJO.getHorarioSequencia());
+		this.numeroHorario = (short)horarioPOJO.getNumeroHorario();
+		this.turma = new TurmaTO(horarioPOJO.getTurma());
 	}
 
 	public HorarioTO() {

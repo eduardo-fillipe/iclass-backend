@@ -28,7 +28,6 @@ public class TestesOrganizador {
 		ProfessorTO estombelo = ProfessorDAO.getInstance().getProfessorCompleto("1");
 		ProfessorTO breno = ProfessorDAO.getInstance().getProfessorCompleto("2");
 
-
 		// Disciplinas
 		DisciplinaTO compiladores = (DisciplinaDAO.getInstance().getDisciplina("CP001"));
 		DisciplinaTO ed = (DisciplinaDAO.getInstance().getDisciplina("ED001"));

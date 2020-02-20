@@ -26,12 +26,15 @@ public class ProfessorTO extends TransferObjectBase{
 	 */
 	private short cargaHorariaSemanal;
 	
-	public ProfessorTO(String nome, String matricula, List<DisciplinaTO> preferencias, short cargaHorariaSemanal) {
+	private List<HorarioTO> preferenciaHorarios;
+	
+	public ProfessorTO(String nome, String matricula, List<DisciplinaTO> preferencias, short cargaHorariaSemanal, List<HorarioTO> preferenciaHorarios) {
 		super();
 		this.nome = nome;
 		this.matricula = matricula;
 		this.preferencias = preferencias;
 		this.cargaHorariaSemanal = cargaHorariaSemanal;
+		this.preferenciaHorarios = preferenciaHorarios;
 	}
 	
 	public ProfessorTO(ProfessorPOJO pojo) {
@@ -39,7 +42,14 @@ public class ProfessorTO extends TransferObjectBase{
 		this.cargaHorariaSemanal = pojo.getCargaHorariaSemanal();
 		this.matricula = pojo.getMatricula();
 		this.preferencias = new ArrayList<DisciplinaTO>();
-				
+		this.preferenciaHorarios = new ArrayList<>();
+		
+		if (pojo.getPreferenciaHorarios() != null) {
+			pojo.getPreferenciaHorarios().forEach(h -> {
+				this.preferenciaHorarios.add(new HorarioTO(h));
+			});
+		}
+		
 		pojo.getPreferencias().forEach(d -> {
 			DisciplinaTO disciplina = new DisciplinaTO();
 			disciplina.setCodigo(d);
@@ -55,7 +65,14 @@ public class ProfessorTO extends TransferObjectBase{
 		this.cargaHorariaSemanal = pojo.getCargaHorariaSemanal();
 		this.matricula = pojo.getMatricula();
 		this.nome = pojo.getNome();
-		this.preferencias = new ArrayList<DisciplinaTO>();
+		this.preferencias = new ArrayList<>();
+		this.preferenciaHorarios = new ArrayList<>();
+		
+		if (pojo.getPreferenciaHorarios() != null) {
+			pojo.getPreferenciaHorarios().forEach(h -> {
+				this.preferenciaHorarios.add(new HorarioTO(h));
+			});
+		}
 		
 		for (DisciplinaPOJO d : pojo.getPreferencias()) {
 			preferencias.add(new DisciplinaTO(d));
@@ -114,20 +131,17 @@ public class ProfessorTO extends TransferObjectBase{
 		this.cargaHorariaSemanal = cargaHorariaSemanal;
 	}
 
+	public List<HorarioTO> getPreferenciaHorarios() {
+		return preferenciaHorarios;
+	}
+
+	public void setPreferenciaHorarios(List<HorarioTO> preferenciaHorarios) {
+		this.preferenciaHorarios = preferenciaHorarios;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ProfessorTO [nome=");
-		builder.append(nome);
-		builder.append(", matricula=");
-		builder.append(matricula);
-		builder.append(", preferencias=");
-		builder.append(preferencias);
-		builder.append(", cargaHorariaSemanal=");
-		builder.append(cargaHorariaSemanal);
-		builder.append("]");
-		return builder.toString();
-	}
-	
-	
+		return "ProfessorTO [nome=" + nome + ", matricula=" + matricula + ", preferencias=" + preferencias
+				+ ", cargaHorariaSemanal=" + cargaHorariaSemanal + ", preferenciaHorarios=" + preferenciaHorarios + "]";
+	}	
 }
