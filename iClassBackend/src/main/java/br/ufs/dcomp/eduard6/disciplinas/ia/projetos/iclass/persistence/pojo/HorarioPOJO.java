@@ -15,7 +15,8 @@ public class HorarioPOJO {
 
 	public HorarioPOJO(HorarioTO horarioTO) {
 		super();
-		this.turma = new TurmaPOJO(horarioTO.getTurma());
+		if (horarioTO.getTurma() != null)
+		    this.turma = new TurmaPOJO(horarioTO.getTurma());
 		this.codigo = horarioTO.getCodigo();
 		this.horarioSequencia = horarioTO.getHorarioSequencia().getValor();
 		this.numeroHorario = horarioTO.getNumeroHorario();

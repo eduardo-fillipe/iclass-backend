@@ -73,7 +73,20 @@ public class HorarioTO extends TransferObjectBase implements Comparable<HorarioT
 	 * @return
 	 */
 	public static HorarioTO fromCodigo(String codigoHorario) {
-		throw new UnsupportedOperationException("Não implementado.");
+		HorarioTO horarioTO = new HorarioTO();
+		
+		horarioTO.setCodigo(codigoHorario);
+		
+		char cDia = codigoHorario.charAt(0);
+        int iDia = Integer.parseInt((String.valueOf(cDia)));
+        horarioTO.setDia(DayOfWeek.of(iDia - 1));
+        
+        int qtHorarios = codigoHorario.substring(2).length();
+        
+        horarioTO.setHorarioSequencia(HorarioSequencia.fromValue(qtHorarios));
+        horarioTO.setNumeroHorario(Short.parseShort(String.valueOf(codigoHorario.charAt(2))));
+ 
+		return horarioTO;
 	}
 
 	public HorarioTO(String codigo, DayOfWeek dia, HorarioSequencia horarioSequencia, TurmaTO turma,
@@ -90,7 +103,7 @@ public class HorarioTO extends TransferObjectBase implements Comparable<HorarioT
 	}
 
 	public List<HorarioTO> transformarEmSequenciaDois() {
-		ArrayList<HorarioTO> novos = new ArrayList<HorarioTO>();
+		ArrayList<HorarioTO> novos = new ArrayList<>();
 
 		int quantidadeHorariosTam2 = this.getHorarioSequencia().getValor() / 2;
 
@@ -159,11 +172,12 @@ public class HorarioTO extends TransferObjectBase implements Comparable<HorarioT
 	public HorarioTO(HorarioPOJO horarioPOJO) { 
 		this.codigo = horarioPOJO.getCodigo();
 		char cDia = horarioPOJO.getCodigo().charAt(0);
-		int iDia = Integer.valueOf((String.valueOf(cDia)));
+		int iDia = Integer.parseInt((String.valueOf(cDia)));
 		this.dia = DayOfWeek.of(iDia - 1);
 		this.horarioSequencia = HorarioSequencia.fromValue(horarioPOJO.getHorarioSequencia());
 		this.numeroHorario = (short)horarioPOJO.getNumeroHorario();
-		this.turma = new TurmaTO(horarioPOJO.getTurma());
+		if (horarioPOJO.getTurma() != null)
+		    this.turma = new TurmaTO(horarioPOJO.getTurma());
 	}
 
 	public HorarioTO() {

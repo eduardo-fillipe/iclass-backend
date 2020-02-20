@@ -17,17 +17,15 @@ public class TesteOrdenacaoHorarios {
 		HorarioTO horarioCP1 = new HorarioTO("2T12", DayOfWeek.MONDAY, HorarioSequencia.DOIS, null, (short)1);
 		HorarioTO horarioCP2 = new HorarioTO("4T12", DayOfWeek.WEDNESDAY, HorarioSequencia.DOIS, null, (short)1);
 		
-		ArrayList<HorarioTO> arrayList = new ArrayList<HorarioTO>();
+		ArrayList<HorarioTO> arrayList = new ArrayList<>();
 		arrayList.add(horarioED1);
 		arrayList.add(horarioED2);
 		arrayList.add(horarioCP1);
 		arrayList.add(horarioCP2);
-		
+
 		System.out.println(HorarioTO.isConsecutivos(new ArrayList<HorarioTO>(Arrays.asList(horarioED3_cpy, horarioED3))));
 		System.out.println(horarioED3.equals(horarioED3_cpy));
-		float a = 2960.0f;
-	      float b = 2960.0f;
 
-		System.out.println(a > b);
+		System.out.println(HorarioTO.fromCodigo("2T1234").transformarEmSequenciaDois());
 	}
 }
