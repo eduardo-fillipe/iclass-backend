@@ -60,7 +60,7 @@ public abstract class OganizadorIClassBase {
 	private CspSolver<TurmaVariable, IClassDomainRepresentation> getSolverFromEnum() {
 		switch (solverAlgorithm) {
 			case MIN_CONFLICTS:
-				return new MinConflictsSolver<>(10000);
+				return new MinConflictsSolver<>(5000);
 			case BACKTRACKING:
 				return new FlexibleBacktrackingSolver<>();
 			case BACKTRACKING_WITH_HEURISTCS:

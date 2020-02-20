@@ -7,13 +7,16 @@ import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.CspListener;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.PreferenciaHorariosProfessor;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.TurmaDevePossuirProfessor;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.util.CspUtil;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.HorarioTO;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
 
 /**
- * Classe responsável por manter uma fila de prioridades do N melhores
+ * Classe responsável por manter uma fila de prioridades dos N melhores
  * candidatos, caso o CSP falhe.
  * 
  * Utiliza uma função objetivo para avaliar e decidir se o csp será mantido ou
@@ -32,9 +35,19 @@ public class CandidatosSolucaoListener implements CspListener<TurmaVariable, ICl
 
 	private int quantCandidatos;
 
-	private static final float PONT_PROFESSOR_TURMA = 1F;
-
-	private static final float PONT_RESTRICAO = 5F;
+	/**
+	 * Pontuação por professor que que leciona/ não leciona no horario de sua
+	 * preferência.
+	 */
+	private static final float PONT_PROFESSOR_HORARIO = 1F;
+	/**
+	 * Pontuação por turma com/sem professor.
+	 */
+	private static final float PONT_PROFESSOR_TURMA = 5F;
+	/**
+	 * Pontução por qualquer outra restrição.
+	 */
+	private static final float PONT_RESTRICAO = 10F;
 
 	public CandidatosSolucaoListener(int quantCandidatos) {
 		super();
@@ -69,7 +82,8 @@ public class CandidatosSolucaoListener implements CspListener<TurmaVariable, ICl
 	 * @param csp
 	 * @param assignment
 	 * @param variable
-	 * @return Uma pontuação que determina o quão boa é uma determinada grade. Quão maior o valor, melhor a grade.
+	 * @return Uma pontuação que determina o quão boa é uma determinada grade. Quão
+	 *         maior o valor, melhor a grade.
 	 */
 	private float getObjectiveFunctionValue(CSP<TurmaVariable, IClassDomainRepresentation> csp,
 			Assignment<TurmaVariable, IClassDomainRepresentation> assignment, TurmaVariable variable) {
@@ -82,18 +96,40 @@ public class CandidatosSolucaoListener implements CspListener<TurmaVariable, ICl
 			} else {
 				pont -= PONT_PROFESSOR_TURMA;
 			}
+		}
 
-			for (Constraint<TurmaVariable, IClassDomainRepresentation> restricao : csp.getConstraints()) {
-				if (!(restricao instanceof TurmaDevePossuirProfessor)) {
-					if (restricao.isSatisfiedWith(assignment)) {
-						pont += PONT_RESTRICAO;
-					} else {
-						pont -= PONT_RESTRICAO;
-					}
+		for (TurmaVariable turma : csp.getVariables()) {
+			IClassDomainRepresentation valueTuma = assignment.getValue(turma);
+			if (valueTuma != null && valueTuma.getProfessor() != null) {
+				if (isProfessorEmHorarioPreferencial(valueTuma.getHorario(), valueTuma.getProfessor())) {
+					pont += PONT_PROFESSOR_HORARIO;
+				} else {
+					pont -= PONT_PROFESSOR_HORARIO;
+				}
+			}
+		}
+
+		for (Constraint<TurmaVariable, IClassDomainRepresentation> restricao : csp.getConstraints()) {
+			if (!(restricao instanceof TurmaDevePossuirProfessor)
+					&& !(restricao instanceof PreferenciaHorariosProfessor)) {
+				if (restricao.isSatisfiedWith(assignment)) {
+					pont += PONT_RESTRICAO;
+				} else {
+					pont -= PONT_RESTRICAO;
 				}
 			}
 		}
 		return pont;
+	}
+
+	/**
+	 * Retorna se um professor possui um determinado horario em sua lista de preferências.
+	 * @param horario
+	 * @param professor
+	 * @return True se um professor possui um determinado horario em sua lista de preferências.
+	 */
+	private boolean isProfessorEmHorarioPreferencial(HorarioTO horario, ProfessorTO professor) {
+		return professor.getPreferenciaHorarios().contains(horario); 
 	}
 
 	public PriorityQueue<PontuacaoAssignment> getCandidatos() {

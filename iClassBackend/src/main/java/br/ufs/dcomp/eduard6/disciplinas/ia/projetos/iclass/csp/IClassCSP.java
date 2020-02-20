@@ -364,7 +364,19 @@ public class IClassCSP extends CSP<TurmaVariable, IClassDomainRepresentation> {
 			for (HorarioTO horario : turma.getHorariosAulas().values()) {
 				if (horario.getCodigo().charAt(1) != problema.getTurnoGrade().getValue().charAt(0)) { // Se turno !=
 																										// turno
-					throw new IllegalArgumentException ("Turma com turno de horário pre-definido diferente do turno da grade: " + turma);
+					throw new IllegalArgumentException(
+							"Turma com turno de horário pre-definido diferente do turno da grade: " + turma);
+				}
+			}
+
+			if (turma.getProfessor().getPreferenciaHorarios() != null
+					&& !turma.getProfessor().getPreferenciaHorarios().isEmpty()) {
+				for (HorarioTO h : turma.getProfessor().getPreferenciaHorarios()) {
+					if (!turma.getHorariosAulas().containsKey(h.getCodigo())) {
+						throw new IllegalArgumentException(
+								"Professor alocado em turma predefinida com horário que não é de sua preferência: Professor -> "
+										+ professor + " Turma -> " + turma);
+					}
 				}
 			}
 		}

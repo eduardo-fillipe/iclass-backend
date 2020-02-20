@@ -5,7 +5,7 @@
 
 	<groupId>br.ufs.dcomp.eduard6.disciplinas.ia.projetos</groupId>
 	<artifactId>iClass</artifactId>
-	<version>1.4.0</version>
+	<version>1.5.0</version>
 	<packaging>jar</packaging>
 
 	<name>iClassBackend</name>
@@ -28,12 +28,6 @@
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
 			<version>3.6.3</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.8.5</version>
 		</dependency>
 		<!-- mvn install:install-file -Dfile=/home/eduardo/Documents/repositorios/gitHub/iclass-backend/iClassBackend/lib/aima-core.jar -DgroupId=aima-core -DartifactId=aima-core -Dversion=3.0.0 -Dpackaging=jar -->
 		<dependency>

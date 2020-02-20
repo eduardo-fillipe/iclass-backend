@@ -73,13 +73,13 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 		p.setCargaHorariaSemanal(pp.getCargaHorariaSemanal());
 		p.setPreferencias(new ArrayList<DisciplinaTO>());
 		p.setPreferenciaHorarios(new ArrayList<HorarioTO>());
-		
+
 		for (String pr : pp.getPreferencias()) {
 			DisciplinaTO d = new DisciplinaTO();
 			d.setCodigo(pr);
 			p.getPreferencias().add(d);
 		}
-		
+
 		if (pp.getPreferenciaHorarios() != null) {
 			pp.getPreferenciaHorarios().forEach(h -> {
 				p.getPreferenciaHorarios().add(new HorarioTO(h));
@@ -92,13 +92,15 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 	public ProfessorTO getProfessorCompleto(String matricula) {
 		ProfessorCompletoPOJO doc = getDatabase()
 				.getCollection(
-						MongoDBConnectionManager.getInstance().getPropertie("iclass.mongodb.collectionname.professor"), ProfessorCompletoPOJO.class)
+						MongoDBConnectionManager.getInstance().getPropertie("iclass.mongodb.collectionname.professor"),
+						ProfessorCompletoPOJO.class)
 				.withCodecRegistry(getCodec())
 				.aggregate(Arrays.asList(match(eq("matricula", matricula)), limit(1), unwind("$preferencias"),
 						lookup("disciplina", "preferencias", "codigo", "preferencias"), unwind("$preferencias"),
 						group("$_id", first("matricula", "$matricula"), first("nome", "$nome"),
 								first("cargaHorariaSemanal", "$cargaHorariaSemanal"),
-								push("preferencias", "$preferencias"), push("preferenciaHorarios", "$preferenciaHorarios"))))
+								push("preferencias", "$preferencias"),
+								first("preferenciaHorarios", "$preferenciaHorarios"))))
 				.first();
 
 		ProfessorTO professorTO = new ProfessorTO(doc);
@@ -117,9 +119,9 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 				.aggregate(Arrays.asList(unwind("$preferencias"),
 						lookup("disciplina", "preferencias", "codigo", "preferencias"), unwind("$preferencias"),
 						group("$_id", first("nome", "$nome"), first("cargaHorariaSemanal", "$cargaHorariaSemanal"),
-								first("matricula", "$matricula"), push("preferencias", "$preferencias"), push("preferenciaHorarios", "$preferenciaHorarios"))))
-				.iterator()
-				.forEachRemaining(professorCompleto -> {
+								first("matricula", "$matricula"), push("preferencias", "$preferencias"),
+								first("preferenciaHorarios", "$preferenciaHorarios"))))
+				.iterator().forEachRemaining(professorCompleto -> {
 					p.add(new ProfessorTO(professorCompleto));
 				});
 

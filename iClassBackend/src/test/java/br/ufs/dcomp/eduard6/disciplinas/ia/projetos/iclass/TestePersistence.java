@@ -26,7 +26,7 @@ public class TestePersistence {
         // DisciplinaDAO.getInstance().inserirDisciplina(new
         // DisciplinaTO("Compiladores", "CP001", (short)04, true));
         System.out.println(
-                ProfessorDAO.getInstance().getProfessoresPorNome("Estom", 1));
+                ProfessorDAO.getInstance().getProfessorCompleto("1"));
 
     }
 }

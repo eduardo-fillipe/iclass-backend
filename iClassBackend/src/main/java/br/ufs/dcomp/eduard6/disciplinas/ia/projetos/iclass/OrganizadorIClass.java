@@ -11,6 +11,7 @@ import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CspListener;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.IClassCSP;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.listener.CandidatosSolucaoListener;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.listener.CandidatosSolucaoListener.PontuacaoAssignment;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.OganizadorIClassBase;
@@ -102,7 +103,9 @@ public class OrganizadorIClass extends OganizadorIClassBase {
             resultadoOrganizacao.setMelhoresSolucoesParciais(
                     new LinkedList<>());
             while (!candidatosListener.getCandidatos().isEmpty()) {
-                Assignment<TurmaVariable, IClassDomainRepresentation> assignment = candidatosListener.getCandidatos().poll().getAssignment();
+            	PontuacaoAssignment pooled = candidatosListener.getCandidatos().poll();
+            	System.out.println(pooled);
+                Assignment<TurmaVariable, IClassDomainRepresentation> assignment = pooled.getAssignment();
                 GradeTO grade = toGradeTO(assignment, csp);
                 resultadoOrganizacao.getMelhoresSolucoesParciais().add(0,
                         grade);
@@ -141,9 +144,3 @@ public class OrganizadorIClass extends OganizadorIClassBase {
         return grade;
     }
 }
-
-// System.out.println("Horarios: " + csp.getHorarios());
-// System.out.println("Dominio: " + csp.getDominioProblema());
-// System.out.println("Professores: " + csp.getProfessores());
-// System.out.println("Turmas Obrigatorias: " + csp.getTurmasObrigatorias());
-// System.out.println("Turmas Predefinidas: " + csp.getTurmasPredefinidas());
