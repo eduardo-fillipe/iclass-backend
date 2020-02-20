@@ -93,6 +93,7 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 		ProfessorCompletoPOJO doc = getDatabase()
 				.getCollection(
 						MongoDBConnectionManager.getInstance().getPropertie("iclass.mongodb.collectionname.professor"), ProfessorCompletoPOJO.class)
+				.withCodecRegistry(getCodec())
 				.aggregate(Arrays.asList(match(eq("matricula", matricula)), limit(1), unwind("$preferencias"),
 						lookup("disciplina", "preferencias", "codigo", "preferencias"), unwind("$preferencias"),
 						group("$_id", first("matricula", "$matricula"), first("nome", "$nome"),
