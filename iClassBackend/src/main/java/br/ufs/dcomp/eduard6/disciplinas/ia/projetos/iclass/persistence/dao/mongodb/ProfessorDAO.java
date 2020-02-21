@@ -67,6 +67,9 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 
 		ProfessorPOJO pp = getCollection().find(new Document("matricula", matricula)).first();
 
+		if (pp == null)
+			return null;
+		
 		ProfessorTO p = new ProfessorTO();
 		p.setNome(pp.getNome());
 		p.setMatricula(pp.getMatricula());
@@ -102,8 +105,10 @@ public class ProfessorDAO extends AbstractMongoDao<ProfessorPOJO> {
 								push("preferencias", "$preferencias"),
 								first("preferenciaHorarios", "$preferenciaHorarios"))))
 				.first();
-
-		ProfessorTO professorTO = new ProfessorTO(doc);
+		ProfessorTO professorTO = null;
+		if (doc != null) {
+			professorTO = new ProfessorTO(doc);
+		}
 
 		return professorTO;
 	}
