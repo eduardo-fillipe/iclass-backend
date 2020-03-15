@@ -6,7 +6,6 @@ import java.util.PriorityQueue;
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.Constraint;
-import aima.core.search.csp.CspListener;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.PreferenciaHorariosProfessor;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.restricoes.TurmaDevePossuirProfessor;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.util.CspUtil;
@@ -29,7 +28,7 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.ProfessorTO;
  * @author Eduardo Fillipe da Silva Reis
  *
  */
-public class CandidatosSolucaoListener implements CspListener<TurmaVariable, IClassDomainRepresentation> {
+public class CandidatosSolucaoListener implements IClassCspListener<TurmaVariable, IClassDomainRepresentation> {
 
 	private PriorityQueue<PontuacaoAssignment> candidatos;
 
@@ -55,24 +54,22 @@ public class CandidatosSolucaoListener implements CspListener<TurmaVariable, ICl
 		this.quantCandidatos = quantCandidatos;
 	}
 
+	
 	@Override
-	public void stateChanged(CSP<TurmaVariable, IClassDomainRepresentation> csp,
-			Assignment<TurmaVariable, IClassDomainRepresentation> assignment, TurmaVariable variable) {
-		if (assignment != null && assignment.isComplete(csp.getVariables())) {
-			float pontuacao = getObjectiveFunctionValue(csp, assignment, variable);
-			if (candidatos.peek() != null) {
-				if (pontuacao > candidatos.peek().getPontuacao()) {
-					PontuacaoAssignment pA = new PontuacaoAssignment(pontuacao, assignment.clone());
-					if (!candidatos.contains(pA)) {
-						candidatos.add(pA);
-						if (candidatos.size() > quantCandidatos) {
-							candidatos.poll();
-						}
+	public void iClassStateChanged(CSP<TurmaVariable, IClassDomainRepresentation> csp,
+			Assignment<TurmaVariable, IClassDomainRepresentation> assignment, TurmaVariable variable, float pontuacao) {
+		if (candidatos.peek() != null) {
+			if (pontuacao > candidatos.peek().getPontuacao()) {
+				PontuacaoAssignment pA = new PontuacaoAssignment(pontuacao, assignment.clone());
+				if (!candidatos.contains(pA)) {
+					candidatos.add(pA);
+					if (candidatos.size() > quantCandidatos) {
+						candidatos.poll();
 					}
 				}
-			} else {
-				candidatos.add(new PontuacaoAssignment(pontuacao, assignment));
 			}
+		} else {
+			candidatos.add(new PontuacaoAssignment(pontuacao, assignment));
 		}
 	}
 
@@ -85,6 +82,7 @@ public class CandidatosSolucaoListener implements CspListener<TurmaVariable, ICl
 	 * @return Uma pontuação que determina o quão boa é uma determinada grade. Quão
 	 *         maior o valor, melhor a grade.
 	 */
+	@SuppressWarnings("unused")
 	private float getObjectiveFunctionValue(CSP<TurmaVariable, IClassDomainRepresentation> csp,
 			Assignment<TurmaVariable, IClassDomainRepresentation> assignment, TurmaVariable variable) {
 		float pont = 0;
@@ -233,4 +231,5 @@ public class CandidatosSolucaoListener implements CspListener<TurmaVariable, ICl
 			return Float.compare(o1.getPontuacao(), o2.getPontuacao());
 		}
 	}
+
 }

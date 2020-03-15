@@ -19,7 +19,7 @@ public abstract class PersistenceModule <K>{
 	public PersistenceModule() {
 		try {
 			setProperties(loadProperties());
-			LOGGER.log(Level.SEVERE, System.getProperty("user.dir"));
+			LOGGER.log(Level.INFO, "mongoDataBase.properties: " + System.getProperty("user.dir"));
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, System.getProperty("user.dir"));
 			LOGGER.log(Level.SEVERE, "Não foi possível carregar as propriedades de banco de dados.", e);

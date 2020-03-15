@@ -9,9 +9,11 @@ import java.util.Optional;
 
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.CspListener;
+import aima.core.search.csp.CspSolver;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.IClassCSP;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.listener.CandidatosSolucaoListener;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.listener.CandidatosSolucaoListener.PontuacaoAssignment;
+import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.solver.IClassCspSolver;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.IClassDomainRepresentation;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.csp.variables.TurmaVariable;
 import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.organizador.OganizadorIClassBase;
@@ -31,20 +33,16 @@ import br.ufs.dcomp.eduard6.disciplinas.ia.projetos.iclass.to.TurmaTO;
  */
 public class OrganizadorIClass extends OganizadorIClassBase {
 
-    private boolean coletarMelhoresParciais;
 
     /**
      * Instancia um Organizador iClass.
      * 
      * @param problema Problema ser solucionado.
      * @param solverAlgorithm Algoritmo a ser utilizado pelo organizador.
-     * @param coletarMelhoresParciais Se devem ou não ser buscadas soluções
-     *        parciais.
      */
     public OrganizadorIClass(ProblemaOrganizacaoTO problema,
-            CspSolverEnum solverAlgorithm, boolean coletarMelhoresParciais) {
+            CspSolverEnum solverAlgorithm) {
         super(problema, solverAlgorithm);
-        this.coletarMelhoresParciais = coletarMelhoresParciais;
     }
 
     /**
@@ -58,7 +56,7 @@ public class OrganizadorIClass extends OganizadorIClassBase {
         super(problema, CspSolverEnum.MIN_CONFLICTS);
     }
 
-    @Override
+	@Override
     public ResultadoOrganizacaoTO organize() {
         long startTime = System.currentTimeMillis();
         if (getProblema() == null)
@@ -67,10 +65,15 @@ public class OrganizadorIClass extends OganizadorIClassBase {
         CandidatosSolucaoListener candidatosListener = new CandidatosSolucaoListener(
                 10); // 10 Melhores Candidatos
         CspListener.StepCounter<TurmaVariable, IClassDomainRepresentation> stepCounter = new CspListener.StepCounter<>();
-        getSolver().addCspListener(stepCounter);
-
-        if (this.coletarMelhoresParciais)
-            getSolver().addCspListener(candidatosListener);
+        CspSolver<TurmaVariable, IClassDomainRepresentation> solver = getSolver();
+        solver.addCspListener(stepCounter);
+        
+        
+        
+        if (solver instanceof IClassCspSolver) {
+        	IClassCspSolver<TurmaVariable, IClassDomainRepresentation> iClasssolver = (IClassCspSolver<TurmaVariable, IClassDomainRepresentation>)solver;
+        	iClasssolver.addiClassCspListener(candidatosListener);
+        }
 
         IClassCSP csp = new IClassCSP(getProblema());
         Optional<Assignment<TurmaVariable, IClassDomainRepresentation>> result = getSolver().solve(
@@ -99,7 +102,7 @@ public class OrganizadorIClass extends OganizadorIClassBase {
 
         resultadoOrganizacao.setSolucao(gradeResultado);
 
-        if (coletarMelhoresParciais) {
+        if (solver instanceof IClassCspSolver) {
             resultadoOrganizacao.setMelhoresSolucoesParciais(
                     new LinkedList<>());
             while (!candidatosListener.getCandidatos().isEmpty()) {
