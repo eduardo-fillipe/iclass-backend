@@ -77,10 +77,6 @@ public class IClassCSPMinConflictsSolver<VAR extends Variable, VAL> extends ICla
 			solutionHelper.setSolution(true);
 		}
 
-		if (assignment.isSolution(csp)) {
-			System.out.println("SOLUCAO");
-		}
-
 		float pont = 0;
 		for (TurmaVariable turma : csp.getVariables()) {
 			IClassDomainRepresentation value = assignment.getValue(turma);
